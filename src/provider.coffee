@@ -18,8 +18,20 @@ angular.module 'builder.provider', []
     $http = null
     $templateCache = null
 
+    # config
     @config =
         popoverPlacement: 'right'
+        requiredIndicator: '*'
+        requiredLabelColor: '#000000'
+        optionalIndicator: '#'
+        optionLabelColor: '#000000'
+        labelPosition: 'above'
+        fieldBackgroundColor: '#ffffff'
+        formBackgroundColor: '#ffffff'
+        errorColor: '#ff0000'
+        errorPosition: 'below'
+        successMessage: 'Success message received'
+
     # all components
     @components = {}
     # all groups of components

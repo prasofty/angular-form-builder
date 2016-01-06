@@ -9,6 +9,15 @@ angular.module 'app', ['builder', 'builder.components', 'validator.rules']
     # ----------------------------------------
     # builder
     # ----------------------------------------
+    console.log($builder.config.labelPosition)
+    textbox = $builder.addFormObject 'default',
+        id: 'textbox'
+        component: 'textInput'
+        label: 'Name'
+        description: 'Your name'
+        placeholder: 'Your name'
+        required: yes
+        editable: yes
 
     # formObjects
     $scope.form = $builder.forms['default']

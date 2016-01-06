@@ -180,23 +180,40 @@
 (function() {
   angular.module('builder.directive', ['builder.provider', 'builder.controller', 'builder.drag', 'validator']).directive('fbBuilder', [
     '$injector', function($injector) {
-      var $builder, $drag;
+      var $builder, $compile, $drag;
       $builder = $injector.get('$builder');
       $drag = $injector.get('$drag');
+      $compile = $injector.get('$compile');
       return {
         restrict: 'A',
         scope: {
           fbBuilder: '='
         },
-        template: "<div class='form-horizontal'>\n    <div class='fb-form-object-editable' ng-repeat=\"object in formObjects\"\n        fb-form-object-editable=\"object\"></div>\n</div>",
+        template: "<div class=\"panel panel-default\">\n    <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">\n            Form Builder\n            <span class=\"pull-right\"><a class=\"form-settings\"><i class=\"fa fa-cog\"></i></a></span>\n        </h3>\n        <div class=\"form-settings-popover hide\">\n            <form>\n                <div class=\"form-group\">\n                  <label class='control-label'>Required Indicator</label>\n                  <input type='text' ng-model=\"config.requiredIndicator\" validator=\"[required]\" class='form-control'/>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Required Label Color</label>\n                  <input colorpicker=\"hex\" type=\"text\" ng-model=\"config.requiredLabelColor\" class=\"form-control\" />\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Label Position</label>\n                  <!-- FIXME select default value -->\n                  <select ng-model=\"config.labelPosition\" class=\"form-control\">\n                    <option value=\"above\">Above</option>\n                    <option value=\"left\">Left</option>\n                  </select>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>formBackgroundColor</label>\n                  <input colorpicker=\"hex\" type='text' ng-model=\"config.formBackgroundColor\" class='form-control'/>\n                </div>\n                <hr/>\n                <div class='form-group'>\n                  <input type='button' ng-click=\"formSettingsSave($event)\" class='btn btn-primary' value='Save'/>\n                </div>\n            </form>\n        </div>\n    </div>\n    <div class=\"panel-body\">\n        <div ng-class=\"{'form-horizontal': config.labelPosition == 'left'}\">\n            <div class='fb-form-object-editable' ng-repeat=\"object in formObjects\"\n                fb-form-object-editable=\"object\"></div>\n        </div>\n    </div>\n</div>",
         link: function(scope, element, attrs) {
-          var beginMove, _base, _name;
+          var beginMove, configPopover, _base, _name;
           scope.formName = attrs.fbBuilder;
           if ((_base = $builder.forms)[_name = scope.formName] == null) {
             _base[_name] = [];
           }
           scope.formObjects = $builder.forms[scope.formName];
           beginMove = true;
+          scope.config = $builder.config;
+          configPopover = {
+            id: "fb-" + (Math.random().toString().substr(2)),
+            view: null,
+            html: $(element).find('.form-settings-popover').html()
+          };
+          configPopover.html = $(configPopover.html).addClass(configPopover.id);
+          configPopover.view = $compile(configPopover.html)(scope);
+          $(element).addClass(configPopover.id);
+          $(element).find('.form-settings').popover({
+            html: true,
+            title: 'Form Settings',
+            content: configPopover.view,
+            container: 'body',
+            placement: 'bottom'
+          });
           $(element).addClass('fb-builder');
           return $drag.droppable($(element), {
             move: function(e) {
@@ -292,6 +309,7 @@
           scope.inputArray = [];
           scope.$component = $builder.components[scope.formObject.component];
           scope.setupScope(scope.formObject);
+          scope.config = $builder.config;
           scope.$watch('$component.template', function(template) {
             var view;
             if (!template) {
@@ -476,7 +494,7 @@
           input: '=ngModel',
           "default": '=fbDefault'
         },
-        template: "<div class='fb-form-object' ng-repeat=\"object in form\" fb-form-object=\"object\"></div>",
+        template: "<div ng-class=\"{'form-horizontal': config.labelPosition == 'left'}\">\n    <div class='fb-form-object' ng-repeat=\"object in form\" fb-form-object=\"object\"></div>\n</div>",
         controller: 'fbFormController',
         link: function(scope, element, attrs) {
           var $builder, _base, _name;
@@ -484,7 +502,8 @@
           if ((_base = $builder.forms)[_name = scope.formName] == null) {
             _base[_name] = [];
           }
-          return scope.form = $builder.forms[scope.formName];
+          scope.form = $builder.forms[scope.formName];
+          return scope.config = $builder.config;
         }
       };
     }
@@ -995,7 +1014,17 @@
     $http = null;
     $templateCache = null;
     this.config = {
-      popoverPlacement: 'right'
+      popoverPlacement: 'right',
+      requiredIndicator: '*',
+      requiredLabelColor: '#000000',
+      optionalIndicator: '#',
+      optionLabelColor: '#000000',
+      labelPosition: 'above',
+      fieldBackgroundColor: '#ffffff',
+      formBackgroundColor: '#ffffff',
+      errorColor: '#ff0000',
+      errorPosition: 'below',
+      successMessage: 'Success message received'
     };
     this.components = {};
     this.groups = [];

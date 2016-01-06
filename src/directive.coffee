@@ -17,15 +17,54 @@ angular.module 'builder.directive', [
     # providers
     $builder = $injector.get '$builder'
     $drag = $injector.get '$drag'
+    $compile = $injector.get '$compile'
 
     restrict: 'A'
     scope:
         fbBuilder: '='
     template:
         """
-        <div class='form-horizontal'>
-            <div class='fb-form-object-editable' ng-repeat="object in formObjects"
-                fb-form-object-editable="object"></div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Form Builder
+                    <span class="pull-right"><a class="form-settings"><i class="fa fa-cog"></i></a></span>
+                </h3>
+                <div class="form-settings-popover hide">
+                    <form>
+                        <div class="form-group">
+                          <label class='control-label'>Required Indicator</label>
+                          <input type='text' ng-model="config.requiredIndicator" validator="[required]" class='form-control'/>
+                        </div>
+                        <div class="form-group">
+                          <label class='control-label'>Required Label Color</label>
+                          <input colorpicker="hex" type="text" ng-model="config.requiredLabelColor" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                          <label class='control-label'>Label Position</label>
+                          <!-- FIXME select default value -->
+                          <select ng-model="config.labelPosition" class="form-control">
+                            <option value="above">Above</option>
+                            <option value="left">Left</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label class='control-label'>formBackgroundColor</label>
+                          <input colorpicker="hex" type='text' ng-model="config.formBackgroundColor" class='form-control'/>
+                        </div>
+                        <hr/>
+                        <div class='form-group'>
+                          <input type='button' ng-click="formSettingsSave($event)" class='btn btn-primary' value='Save'/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div ng-class="{'form-horizontal': config.labelPosition == 'left'}">
+                    <div class='fb-form-object-editable' ng-repeat="object in formObjects"
+                        fb-form-object-editable="object"></div>
+                </div>
+            </div>
         </div>
         """
     link: (scope, element, attrs) ->
@@ -36,6 +75,31 @@ angular.module 'builder.directive', [
         $builder.forms[scope.formName] ?= []
         scope.formObjects = $builder.forms[scope.formName]
         beginMove = yes
+
+        # getting config into popover
+        scope.config = $builder.config
+
+        configPopover =
+            id: "fb-#{Math.random().toString().substr(2)}"
+            view: null
+            html: $(element).find('.form-settings-popover').html()
+        configPopover.html = $(configPopover.html).addClass configPopover.id
+        # compile popover
+        configPopover.view = $compile(configPopover.html) scope
+        $(element).addClass configPopover.id
+
+        $(element).find('.form-settings').popover
+            html: yes
+            title: 'Form Settings'
+            content: configPopover.view
+            container: 'body'
+            placement: 'bottom'
+
+        # FIXME popover dismiss on when click outside
+        # FIXME popover right view
+        # FIXME popover position
+
+        # end popover
 
         $(element).addClass 'fb-builder'
         $drag.droppable $(element),
@@ -128,6 +192,7 @@ angular.module 'builder.directive', [
         scope.$component = $builder.components[scope.formObject.component]
         # setup scope
         scope.setupScope scope.formObject
+        scope.config = $builder.config
 
         # compile formObject
         scope.$watch '$component.template', (template) ->
@@ -318,7 +383,9 @@ angular.module 'builder.directive', [
         default: '=fbDefault'
     template:
         """
-        <div class='fb-form-object' ng-repeat="object in form" fb-form-object="object"></div>
+        <div ng-class="{'form-horizontal': config.labelPosition == 'left'}">
+            <div class='fb-form-object' ng-repeat="object in form" fb-form-object="object"></div>
+        </div>
         """
     controller: 'fbFormController'
     link: (scope, element, attrs) ->
@@ -328,6 +395,7 @@ angular.module 'builder.directive', [
         # get the form for controller
         $builder.forms[scope.formName] ?= []
         scope.form = $builder.forms[scope.formName]
+        scope.config = $builder.config
 ]
 
 # ----------------------------------------
