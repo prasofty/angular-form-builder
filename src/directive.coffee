@@ -29,6 +29,9 @@ angular.module 'builder.directive', [
                 .fb-builder {
                     background-color: {{config.formBackgroundColor}};
                 }
+                .fb-builder .form-group label.fb-required {
+                    color: {{config.requiredLabelColor}};
+                }
             </style>
             <div class="panel-heading">
                 <h3 class="panel-title">
@@ -43,7 +46,7 @@ angular.module 'builder.directive', [
                         </div>
                         <div class="form-group">
                           <label class='control-label'>Required Label Color</label>
-                          <input colorpicker="hex" type="text" ng-model="config.requiredLabelColor" class="form-control" />
+                          <color-picker ng-model="config.requiredLabelColor" color-picker-format="rgba"></color-picker>
                         </div>
                         <div class="form-group">
                           <label class='control-label'>Label Position</label>
@@ -392,6 +395,9 @@ angular.module 'builder.directive', [
             <style type='text/css'>
                 .fb-form {
                     background-color: {{config.formBackgroundColor}};
+                }
+                .fb-form .form-group label.fb-required {
+                    color: {{config.requiredLabelColor}};
                 }
             </style>
             <div ng-class="{'form-horizontal': config.labelPosition == 'left'}">

@@ -9,7 +9,7 @@
         label: 'Name',
         description: 'Your name',
         placeholder: 'Your name',
-        required: true,
+        required: false,
         editable: true
       });
       $scope.form = $builder.forms['default'];

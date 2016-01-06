@@ -16,7 +16,7 @@ angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'colo
         label: 'Name'
         description: 'Your name'
         placeholder: 'Your name'
-        required: yes
+        required: no
         editable: yes
 
     # formObjects
