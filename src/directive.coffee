@@ -32,6 +32,9 @@ angular.module 'builder.directive', [
                 .fb-builder .form-group label.fb-required {
                     color: {{config.requiredLabelColor}};
                 }
+                .fb-builder .form-group label.fb-required:after {
+                    content: ' {{config.requiredIndicator}}';
+                }
             </style>
             <div class="panel-heading">
                 <h3 class="panel-title">
@@ -42,6 +45,7 @@ angular.module 'builder.directive', [
                     <form>
                         <div class="form-group">
                           <label class='control-label'>Required Indicator</label>
+                          <!-- FIXME validation for required Indicator -->
                           <input type='text' ng-model="config.requiredIndicator" validator="[required]" class='form-control'/>
                         </div>
                         <div class="form-group">
@@ -398,6 +402,9 @@ angular.module 'builder.directive', [
                 }
                 .fb-form .form-group label.fb-required {
                     color: {{config.requiredLabelColor}};
+                }
+                .fb-form .form-group label.fb-required:after {
+                    content: ' {{config.requiredIndicator}}';
                 }
             </style>
             <div ng-class="{'form-horizontal': config.labelPosition == 'left'}">
