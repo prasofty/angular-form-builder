@@ -34,13 +34,15 @@ angular.module 'builder.controller', ['builder.provider']
 
         $scope.optionsText = formObject.options.join '\n'
 
-        $scope.$watch '[label, description, placeholder, required, options, validation]', ->
-            formObject.label = $scope.label
-            formObject.description = $scope.description
-            formObject.placeholder = $scope.placeholder
-            formObject.required = $scope.required
-            formObject.options = $scope.options
-            formObject.validation = $scope.validation
+        $scope.$watch '[fieldName, label, description, placeholder, required, options, validation, design, extraConfigs]', ->
+            formObject.fieldName = $scope.fieldName;
+            formObject.label = $scope.label;
+            formObject.description = $scope.description;
+            formObject.placeholder = $scope.placeholder;
+            formObject.required = $scope.required;
+            formObject.options = $scope.options;
+            formObject.design = $scope.design;
+            formObject.extraConfigs = $scope.extraConfigs;
         , yes
 
         $scope.$watch 'optionsText', (text) ->
@@ -57,12 +59,15 @@ angular.module 'builder.controller', ['builder.provider']
             Backup input value.
             ###
             @model =
+                fieldName: $scope.fieldName
                 label: $scope.label
                 description: $scope.description
                 placeholder: $scope.placeholder
                 required: $scope.required
                 optionsText: $scope.optionsText
                 validation: $scope.validation
+                design: $scope.design
+                extraConfigs: $scope.extraConfigs
         rollback: ->
             ###
             Rollback input value.
@@ -74,6 +79,9 @@ angular.module 'builder.controller', ['builder.provider']
             $scope.required = @model.required
             $scope.optionsText = @model.optionsText
             $scope.validation = @model.validation
+            $scope.fieldName = @model.fieldName
+            $scope.design = @model.design
+            $scope.extraConfigs = @model.extraConfigs
 ]
 
 
@@ -146,6 +154,7 @@ angular.module 'builder.controller', ['builder.provider']
         input =
             id: $scope.formObject.id
             label: $scope.formObject.label
+            fieldName: $scope.formObject.fieldName
             value: value ? ''
         $scope.$parent.input.splice $scope.$index, 1, input
 ]

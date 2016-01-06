@@ -31,13 +31,15 @@
         var component;
         copyObjectToScope(formObject, $scope);
         $scope.optionsText = formObject.options.join('\n');
-        $scope.$watch('[label, description, placeholder, required, options, validation]', function() {
+        $scope.$watch('[fieldName, label, description, placeholder, required, options, validation, design, extraConfigs]', function() {
+          formObject.fieldName = $scope.fieldName;
           formObject.label = $scope.label;
           formObject.description = $scope.description;
           formObject.placeholder = $scope.placeholder;
           formObject.required = $scope.required;
           formObject.options = $scope.options;
-          return formObject.validation = $scope.validation;
+          formObject.design = $scope.design;
+          return formObject.extraConfigs = $scope.extraConfigs;
         }, true);
         $scope.$watch('optionsText', function(text) {
           var x;
@@ -66,12 +68,15 @@
           Backup input value.
            */
           return this.model = {
+            fieldName: $scope.fieldName,
             label: $scope.label,
             description: $scope.description,
             placeholder: $scope.placeholder,
             required: $scope.required,
             optionsText: $scope.optionsText,
-            validation: $scope.validation
+            validation: $scope.validation,
+            design: $scope.design,
+            extraConfigs: $scope.extraConfigs
           };
         },
         rollback: function() {
@@ -87,7 +92,10 @@
           $scope.placeholder = this.model.placeholder;
           $scope.required = this.model.required;
           $scope.optionsText = this.model.optionsText;
-          return $scope.validation = this.model.validation;
+          $scope.validation = this.model.validation;
+          $scope.fieldName = this.model.fieldName;
+          $scope.design = this.model.design;
+          return $scope.extraConfigs = this.model.extraConfigs;
         }
       };
     }
@@ -159,6 +167,7 @@
         input = {
           id: $scope.formObject.id,
           label: $scope.formObject.label,
+          fieldName: $scope.formObject.fieldName,
           value: value != null ? value : ''
         };
         return $scope.$parent.input.splice($scope.$index, 1, input);
@@ -442,14 +451,18 @@
               componentName: scope.component.name
             }
           });
-          return scope.$watch('component.template', function(template) {
-            var view;
-            if (!template) {
-              return;
-            }
-            view = $compile(template)(scope);
-            return $(element).html(view);
-          });
+          if (scope.component.thumbnail) {
+            return $(element).html(scope.component.thumbnail);
+          } else {
+            return scope.$watch('component.template', function(template) {
+              var view;
+              if (!template) {
+                return;
+              }
+              view = $compile(template)(scope);
+              return $(element).html(view);
+            });
+          }
         }
       };
     }
@@ -993,7 +1006,7 @@
       "default": []
     };
     this.convertComponent = function(name, component) {
-      var result, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      var result, _ref, _ref1, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       result = {
         name: name,
         group: (_ref = component.group) != null ? _ref : 'Default',
@@ -1009,7 +1022,8 @@
         template: component.template,
         templateUrl: component.templateUrl,
         popoverTemplate: component.popoverTemplate,
-        popoverTemplateUrl: component.popoverTemplateUrl
+        popoverTemplateUrl: component.popoverTemplateUrl,
+        thumbnail: (_ref10 = component.thumbnail) != null ? _ref10 : ''
       };
       if (!result.template && !result.templateUrl) {
         console.error("The template is empty.");
@@ -1020,7 +1034,7 @@
       return result;
     };
     this.convertFormObject = function(name, formObject) {
-      var component, result, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
+      var component, result, _ref, _ref1, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       if (formObject == null) {
         formObject = {};
       }
@@ -1038,7 +1052,10 @@
         placeholder: (_ref4 = formObject.placeholder) != null ? _ref4 : component.placeholder,
         options: (_ref5 = formObject.options) != null ? _ref5 : component.options,
         required: (_ref6 = formObject.required) != null ? _ref6 : component.required,
-        validation: (_ref7 = formObject.validation) != null ? _ref7 : component.validation
+        validation: (_ref7 = formObject.validation) != null ? _ref7 : component.validation,
+        fieldName: (_ref8 = formObject.fieldName) != null ? _ref8 : component.fieldName,
+        design: (_ref9 = formObject.design) != null ? _ref9 : component.design,
+        extraConfigs: (_ref10 = formObject.extraConfigs) != null ? _ref10 : component.extraConfigs
       };
       return result;
     };

@@ -17,32 +17,17 @@
     <script type="text/javascript" src="example/demo.js"></script>
 </head>
 <body class="container" ng-controller="DemoController">
+    <h1 class="page-header">angular-form-builder</h1>
     <div class="row">
-        <h1>angular-form-builder</h1>
-        <hr/>
-
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Builder</h3>
-                </div>
-                <div fb-builder="default"></div>
-                <div class="panel-footer">
-                    <div class="checkbox">
-                        <label><input type="checkbox" ng-model="isShowScope" />
-                            Show scope
-                        </label>
-                    </div>
-                    <pre ng-if="isShowScope">{{form}}</pre>
-                </div>
-            </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-7">
+            <div fb-builder="default"></div>
         </div>
-
-        <div class="col-md-6">
+        <div class="col-md-2">
             <div fb-components></div>
         </div>
     </div>
-
+    <hr>
     <div class="row">
         <h2>Form</h2>
         <hr/>

@@ -16,6 +16,15 @@ angular.module 'builder.components', ['builder', 'validator.rules']
             {label: 'email', rule: '[email]'}
             {label: 'url', rule: '[url]'}
         ]
+        thumbnail:
+            """
+                <figure class="form-builder-element">
+                  <i class="text-input-icon">Text Input</i>
+                  <figcaption class="form-builder-element-title">
+                    <h6>Text Input</h6>
+                  </figcaption>
+                </figure>
+            """
         template:
             """
             <div class="form-group">
@@ -32,6 +41,10 @@ angular.module 'builder.components', ['builder', 'validator.rules']
                 <div class="form-group">
                     <label class='control-label'>Label</label>
                     <input type='text' ng-model="label" validator="[required]" class='form-control'/>
+                </div>
+                <div class="form-group">
+                    <label class='control-label'>Field Name</label>
+                    <input type='text' ng-model="fieldName" validator="[required]" class='form-control'/>
                 </div>
                 <div class="form-group">
                     <label class='control-label'>Description</label>
@@ -69,6 +82,15 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         description: 'description'
         placeholder: 'placeholder'
         required: no
+        thumbnail:
+            """
+                <figure class="form-builder-element">
+                    <i class="textarea-icon">Text Area</i>
+                    <figcaption class="form-builder-element-title">
+                     <h6>Textarea</h6>
+                    </figcaption>
+                </figure>
+            """
         template:
             """
             <div class="form-group">
@@ -120,6 +142,15 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         required: no
         options: ['value one', 'value two']
         arrayToText: yes
+        thumbnail:
+            """
+                <figure class="form-builder-element">
+                    <i class="checkbox-icon">Checkbox</i>
+                    <figcaption class="form-builder-element-title">
+                     <h6>Checkbox</h6>
+                    </figcaption>
+                </figure>
+            """
         template:
             """
             <div class="form-group">
@@ -176,6 +207,15 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         placeholder: 'placeholder'
         required: no
         options: ['value one', 'value two']
+        thumbnail:
+            """
+                <figure class="form-builder-element">
+                    <i class="radio-icon">Radio</i>
+                    <figcaption class="form-builder-element-title">
+                     <h6>Radio</h6>
+                    </figcaption>
+                </figure>
+            """
         template:
             """
             <div class="form-group">
@@ -225,6 +265,15 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         placeholder: 'placeholder'
         required: no
         options: ['value one', 'value two']
+        thumbnail:
+            """
+                <figure class="form-builder-element">
+                    <i class="select-icon">Select</i>
+                    <figcaption class="form-builder-element-title">
+                     <h6>Select</h6>
+                    </figcaption>
+                </figure>
+            """
         template:
             """
             <div class="form-group">
