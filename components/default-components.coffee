@@ -28,7 +28,7 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         template:
             """
             <div class="form-group">
-                <label for="{{formName+index}}" class="control-label" ng-class="{'fb-required':required, 'col-sm-3': config.labelPosition == 'left'}">{{label}}</label>
+                <label for="{{formName+index}}" class="control-label" ng-class="{'fb-required':required, 'fb-optional':required == 0, 'col-sm-3': config.labelPosition == 'left'}">{{label}}</label>
                 <div ng-class="{'col-sm-9': config.labelPosition == 'left'}">
                     <input type="text" ng-model="inputText" validator-required="{{required}}" validator-group="{{formName}}" id="{{formName+index}}" class="form-control" placeholder="{{placeholder}}"/>
                     <p class='help-block'>{{description}}</p>

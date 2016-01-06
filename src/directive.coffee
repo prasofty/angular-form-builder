@@ -26,8 +26,17 @@ angular.module 'builder.directive', [
         """
         <div class="panel panel-default">
             <style type='text/css'>
-                .fb-builder {
+                .fb-builder .panel {
                     background-color: {{config.formBackgroundColor}};
+                }
+                .fb-builder .panel .panel-body {
+                    min-height: 300px;
+                }
+                .fb-builder .form-group label.fb-optional {
+                    color: {{config.optionalLabelColor}};
+                }
+                .fb-builder .form-group label.fb-optional:after {
+                    content: ' {{config.optionalIndicator}}';
                 }
                 .fb-builder .form-group label.fb-required {
                     color: {{config.requiredLabelColor}};
@@ -51,6 +60,15 @@ angular.module 'builder.directive', [
                         <div class="form-group">
                           <label class='control-label'>Required Label Color</label>
                           <color-picker ng-model="config.requiredLabelColor" color-picker-format="rgba"></color-picker>
+                        </div>
+                        <div class="form-group">
+                          <label class='control-label'>Optional Indicator</label>
+                          <!-- FIXME validation for required Indicator -->
+                          <input type='text' ng-model="config.optionalIndicator" validator="[required]" class='form-control'/>
+                        </div>
+                        <div class="form-group">
+                          <label class='control-label'>Optional Label Color</label>
+                          <color-picker ng-model="config.optionalLabelColor" color-picker-format="rgba"></color-picker>
                         </div>
                         <div class="form-group">
                           <label class='control-label'>Label Position</label>
@@ -399,6 +417,13 @@ angular.module 'builder.directive', [
             <style type='text/css'>
                 .fb-form {
                     background-color: {{config.formBackgroundColor}};
+                    min-height: 300px;
+                }
+                .fb-form .form-group label.fb-optional {
+                    color: {{config.optionalLabelColor}};
+                }
+                .fb-form .form-group label.fb-optional:after {
+                    content: ' {{config.optionalIndicator}}';
                 }
                 .fb-form .form-group label.fb-required {
                     color: {{config.requiredLabelColor}};

@@ -24,7 +24,7 @@ angular.module 'builder.provider', []
         requiredIndicator: '*'
         requiredLabelColor: '#000000'
         optionalIndicator: '#'
-        optionLabelColor: '#000000'
+        optionalLabelColor: '#000000'
         labelPosition: 'above'
         fieldBackgroundColor: '#ffffff'
         formBackgroundColor: '#ffffff'
