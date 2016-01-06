@@ -1,5 +1,5 @@
 (function() {
-  angular.module('app', ['builder', 'builder.components', 'validator.rules']).run(['$builder', function($builder) {}]).controller('DemoController', [
+  angular.module('app', ['builder', 'builder.components', 'validator.rules', 'color.picker']).run(['$builder', function($builder) {}]).controller('DemoController', [
     '$scope', '$builder', '$validator', function($scope, $builder, $validator) {
       var textbox;
       console.log($builder.config.labelPosition);

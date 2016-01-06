@@ -25,6 +25,11 @@ angular.module 'builder.directive', [
     template:
         """
         <div class="panel panel-default">
+            <style type='text/css'>
+                .fb-builder {
+                    background-color: {{config.formBackgroundColor}};
+                }
+            </style>
             <div class="panel-heading">
                 <h3 class="panel-title">
                     Form Builder
@@ -50,7 +55,7 @@ angular.module 'builder.directive', [
                         </div>
                         <div class="form-group">
                           <label class='control-label'>formBackgroundColor</label>
-                          <input colorpicker="hex" type='text' ng-model="config.formBackgroundColor" class='form-control'/>
+                          <color-picker ng-model="config.formBackgroundColor" color-picker-format="rgba"></color-picker>
                         </div>
                         <hr/>
                         <div class='form-group'>
@@ -383,8 +388,15 @@ angular.module 'builder.directive', [
         default: '=fbDefault'
     template:
         """
-        <div ng-class="{'form-horizontal': config.labelPosition == 'left'}">
-            <div class='fb-form-object' ng-repeat="object in form" fb-form-object="object"></div>
+        <div class="fb-form">
+            <style type='text/css'>
+                .fb-form {
+                    background-color: {{config.formBackgroundColor}};
+                }
+            </style>
+            <div ng-class="{'form-horizontal': config.labelPosition == 'left'}">
+                <div class='fb-form-object' ng-repeat="object in form" fb-form-object="object"></div>
+            </div>
         </div>
         """
     controller: 'fbFormController'
@@ -396,6 +408,8 @@ angular.module 'builder.directive', [
         $builder.forms[scope.formName] ?= []
         scope.form = $builder.forms[scope.formName]
         scope.config = $builder.config
+
+
 ]
 
 # ----------------------------------------

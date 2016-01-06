@@ -1,4 +1,4 @@
-angular.module 'app', ['builder', 'builder.components', 'validator.rules']
+angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'color.picker']
 
 .run ['$builder', ($builder) ->
 
