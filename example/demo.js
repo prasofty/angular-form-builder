@@ -2,7 +2,7 @@
   angular.module('app', ['builder', 'builder.components', 'validator.rules', 'color.picker']).run(['$builder', function($builder) {}]).controller('DemoController', [
     '$scope', '$builder', '$validator', function($scope, $builder, $validator) {
       var textbox;
-      console.log($builder.config.labelPosition);
+      $scope.config = $builder.config;
       textbox = $builder.addFormObject('default', {
         id: 'textbox',
         component: 'textInput',

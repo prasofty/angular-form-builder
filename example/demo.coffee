@@ -9,7 +9,7 @@ angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'colo
     # ----------------------------------------
     # builder
     # ----------------------------------------
-    console.log($builder.config.labelPosition)
+    $scope.config = $builder.config
     textbox = $builder.addFormObject 'default',
         id: 'textbox'
         component: 'textInput'
