@@ -189,7 +189,7 @@
         scope: {
           fbBuilder: '='
         },
-        template: "<div class=\"panel panel-default\">\n    <style type='text/css'>\n        .fb-builder .panel {\n            background-color: {{config.formBackgroundColor}};\n        }\n        .fb-builder .panel .panel-body {\n            min-height: 300px;\n        }\n        .fb-builder .form-group {\n            background-color: {{config.fieldBackgroundColor}};\n            padding: 10px;\n            margin-bottom: 0;\n        }\n        .fb-builder .form-group label.fb-optional {\n            color: {{config.optionalLabelColor}};\n        }\n        .fb-builder .form-group label.fb-optional:after {\n            content: ' {{config.optionalIndicator}}';\n        }\n        .fb-builder .form-group label.fb-required {\n            color: {{config.requiredLabelColor}};\n        }\n        .fb-builder .form-group label.fb-required:after {\n            content: ' {{config.requiredIndicator}}';\n        }\n    </style>\n    <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">\n            Form Builder\n            <span class=\"pull-right\"><a class=\"form-settings\"><i class=\"fa fa-cog\"></i></a></span>\n        </h3>\n        <div class=\"form-settings-popover hide\">\n            <form>\n                <div class=\"form-group\">\n                  <label class='control-label'>Required Indicator</label>\n                  <!-- FIXME validation for required Indicator -->\n                  <input type='text' ng-model=\"config.requiredIndicator\" validator=\"[required]\" class='form-control'/>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Required Label Color</label>\n                  <color-picker ng-model=\"config.requiredLabelColor\" color-picker-format=\"rgba\"></color-picker>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Optional Indicator</label>\n                  <!-- FIXME validation for required Indicator -->\n                  <input type='text' ng-model=\"config.optionalIndicator\" validator=\"[required]\" class='form-control'/>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Optional Label Color</label>\n                  <color-picker ng-model=\"config.optionalLabelColor\" color-picker-format=\"rgba\"></color-picker>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Label Position</label>\n                  <!-- FIXME select default value -->\n                  <select ng-model=\"config.labelPosition\" class=\"form-control\">\n                    <option value=\"above\">Above</option>\n                    <option value=\"left\">Left</option>\n                  </select>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Form Background Color</label>\n                  <color-picker ng-model=\"config.formBackgroundColor\" color-picker-format=\"rgba\"></color-picker>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Field Background Color</label>\n                  <color-picker ng-model=\"config.fieldBackgroundColor\" color-picker-format=\"rgba\"></color-picker>\n                </div>\n            </form>\n        </div>\n    </div>\n    <div class=\"panel-body\">\n        <div ng-class=\"{'form-horizontal': config.labelPosition == 'left'}\">\n            <div class='fb-form-object-editable' ng-repeat=\"object in formObjects\"\n                fb-form-object-editable=\"object\"></div>\n        </div>\n    </div>\n</div>",
+        template: "<div class=\"panel panel-default\">\n    <style type='text/css'>\n        .fb-builder .panel {\n            background-color: {{config.formBackgroundColor}};\n        }\n        .fb-builder .panel .panel-body {\n            min-height: 300px;\n        }\n        .fb-builder .form-group {\n            background-color: {{config.fieldBackgroundColor}};\n            padding: 10px;\n            margin-bottom: 0;\n        }\n        .fb-builder .form-group label.fb-optional {\n            color: {{config.optionalLabelColor}};\n        }\n        .fb-builder .form-group label.fb-optional:after {\n            content: ' {{config.optionalIndicator}}';\n        }\n        .fb-builder .form-group label.fb-required {\n            color: {{config.requiredLabelColor}};\n        }\n        .fb-builder .form-group label.fb-required:after {\n            content: ' {{config.requiredIndicator}}';\n        }\n    </style>\n    <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">\n            Form Builder\n            <span class=\"pull-right\"><a class=\"form-settings\"><i class=\"fa fa-cog\"></i></a></span>\n        </h3>\n        <div class=\"form-settings-popover hide\">\n            <form class=\"config-popover\">\n                <div class=\"form-group\">\n                  <label class='control-label'>Required Indicator</label>\n                  <!-- FIXME validation for required Indicator -->\n                  <input type='text' ng-model=\"config.requiredIndicator\" validator=\"[required]\" class='form-control'/>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Required Label Color</label>\n                  <color-picker ng-model=\"config.requiredLabelColor\" color-picker-format=\"rgba\"></color-picker>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Optional Indicator</label>\n                  <!-- FIXME validation for required Indicator -->\n                  <input type='text' ng-model=\"config.optionalIndicator\" validator=\"[required]\" class='form-control'/>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Optional Label Color</label>\n                  <color-picker ng-model=\"config.optionalLabelColor\" color-picker-format=\"rgba\"></color-picker>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Label Position</label>\n                  <!-- FIXME select default value -->\n                  <select ng-model=\"config.labelPosition\" class=\"form-control\">\n                    <option value=\"above\">Above</option>\n                    <option value=\"left\">Left</option>\n                  </select>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Form Background Color</label>\n                  <color-picker ng-model=\"config.formBackgroundColor\" color-picker-format=\"rgba\"></color-picker>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Field Background Color</label>\n                  <color-picker ng-model=\"config.fieldBackgroundColor\" color-picker-format=\"rgba\"></color-picker>\n                </div>\n            </form>\n        </div>\n    </div>\n    <div class=\"panel-body\">\n        <div ng-class=\"{'form-horizontal': config.labelPosition == 'left'}\">\n            <div class='fb-form-object-editable' ng-repeat=\"object in formObjects\"\n                fb-form-object-editable=\"object\"></div>\n        </div>\n    </div>\n</div>",
         link: function(scope, element, attrs) {
           var beginMove, configPopover, _base, _name;
           scope.formName = attrs.fbBuilder;
@@ -214,12 +214,22 @@
             container: 'body',
             placement: 'bottom'
           });
+          $(element).find('.form-settings').on('show.bs.popover', function() {
+            return $("div.fb-form-object-editable").popover('hide');
+          });
+          $('body').on('click', function(e) {
+            return $(element).find('.form-settings').each(function() {
+              if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                return $(this).popover('hide');
+              }
+            });
+          });
           $(element).addClass('fb-builder');
           return $drag.droppable($(element), {
             move: function(e) {
               var $empty, $formObject, $formObjects, height, index, offset, positions, _i, _j, _ref, _ref1;
               if (beginMove) {
-                $("div.fb-form-object-editable").popover('hide');
+                $("div.fb-form-object-editable, div.fb-builder .form-settings").popover('hide');
                 beginMove = false;
               }
               $formObjects = $(element).find('.fb-form-object-editable:not(.empty,.dragging)');
@@ -253,7 +263,7 @@
             },
             out: function() {
               if (beginMove) {
-                $("div.fb-form-object-editable").popover('hide');
+                $("div.fb-form-object-editable, div.fb-builder .form-settings").popover('hide');
                 beginMove = false;
               }
               return $(element).find('.empty').remove();
@@ -398,7 +408,7 @@
             if ($drag.isMouseMoved()) {
               return false;
             }
-            $("div.fb-form-object-editable:not(." + popover.id + ")").popover('hide');
+            $("div.fb-form-object-editable:not(." + popover.id + "), div.fb-builder .form-settings").popover('hide');
             $popover = $("form." + popover.id).closest('.popover');
             if ($popover.length > 0) {
               elementOrigin = $(element).offset().top + $(element).height() / 2;
@@ -445,7 +455,7 @@
   ]).directive('fbComponents', function() {
     return {
       restrict: 'A',
-      template: "<div class=\"form-options-affix\">\n<ul ng-if=\"groups.length > 1\" class=\"nav nav-tabs nav-justified\">\n    <li ng-repeat=\"group in groups\" ng-class=\"{active:activeGroup==group}\">\n        <a href='#' ng-click=\"selectGroup($event, group)\">{{group}}</a>\n    </li>\n</ul>\n<div class='form-horizontal'>\n    <div class='fb-component' ng-repeat=\"component in components\"\n        fb-component=\"component\"></div>\n</div>\n</div>",
+      template: "<ul ng-if=\"groups.length > 1\" class=\"nav nav-tabs nav-justified\">\n    <li ng-repeat=\"group in groups\" ng-class=\"{active:activeGroup==group}\">\n        <a href='#' ng-click=\"selectGroup($event, group)\">{{group}}</a>\n    </li>\n</ul>\n<div class='form-horizontal'>\n    <div class='fb-component' ng-repeat=\"component in components\"\n        fb-component=\"component\"></div>\n</div>",
       controller: 'fbComponentsController'
     };
   }).directive('fbComponent', [

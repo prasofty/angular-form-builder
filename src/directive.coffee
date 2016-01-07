@@ -56,7 +56,7 @@ angular.module 'builder.directive', [
                     <span class="pull-right"><a class="form-settings"><i class="fa fa-cog"></i></a></span>
                 </h3>
                 <div class="form-settings-popover hide">
-                    <form>
+                    <form class="config-popover">
                         <div class="form-group">
                           <label class='control-label'>Required Indicator</label>
                           <!-- FIXME validation for required Indicator -->
@@ -130,7 +130,13 @@ angular.module 'builder.directive', [
             container: 'body'
             placement: 'bottom'
 
-        # FIXME popover dismiss on when click outside
+        $(element).find('.form-settings').on 'show.bs.popover', ->
+            $("div.fb-form-object-editable").popover 'hide'
+
+        $('body').on 'click', (e) ->
+            $(element).find('.form-settings').each ->
+                if !$(this).is(e.target) and $(this).has(e.target).length == 0 and $('.popover').has(e.target).length == 0
+                    $(this).popover 'hide'
         # FIXME popover right view
         # FIXME popover position
 
@@ -141,7 +147,7 @@ angular.module 'builder.directive', [
             move: (e) ->
                 if beginMove
                     # hide all popovers
-                    $("div.fb-form-object-editable").popover 'hide'
+                    $("div.fb-form-object-editable, div.fb-builder .form-settings").popover 'hide'
                     beginMove = no
 
                 $formObjects = $(element).find '.fb-form-object-editable:not(.empty,.dragging)'
@@ -177,7 +183,7 @@ angular.module 'builder.directive', [
             out: ->
                 if beginMove
                     # hide all popovers
-                    $("div.fb-form-object-editable").popover 'hide'
+                    $("div.fb-form-object-editable, div.fb-builder .form-settings").popover 'hide'
                     beginMove = no
 
                 $(element).find('.empty').remove()
@@ -309,7 +315,7 @@ angular.module 'builder.directive', [
         $(element).on 'show.bs.popover', ->
             return no if $drag.isMouseMoved()
             # hide other popovers
-            $("div.fb-form-object-editable:not(.#{popover.id})").popover 'hide'
+            $("div.fb-form-object-editable:not(.#{popover.id}), div.fb-builder .form-settings").popover 'hide'
 
             $popover = $("form.#{popover.id}").closest '.popover'
             if $popover.length > 0
@@ -361,7 +367,6 @@ angular.module 'builder.directive', [
     restrict: 'A'
     template:
         """
-        <div class="form-options-affix">
         <ul ng-if="groups.length > 1" class="nav nav-tabs nav-justified">
             <li ng-repeat="group in groups" ng-class="{active:activeGroup==group}">
                 <a href='#' ng-click="selectGroup($event, group)">{{group}}</a>
@@ -370,7 +375,6 @@ angular.module 'builder.directive', [
         <div class='form-horizontal'>
             <div class='fb-component' ng-repeat="component in components"
                 fb-component="component"></div>
-        </div>
         </div>
         """
     controller: 'fbComponentsController'
