@@ -361,16 +361,16 @@ angular.module 'builder.directive', [
     restrict: 'A'
     template:
         """
-        <div>
-            <ul ng-if="groups.length > 1" class="nav nav-tabs nav-justified">
-                <li ng-repeat="group in groups" ng-class="{active:activeGroup==group}">
-                    <a href='#' ng-click="selectGroup($event, group)">{{group}}</a>
-                </li>
-            </ul>
-            <div class='form-horizontal'>
-                <div class='fb-component' ng-repeat="component in components"
-                    fb-component="component"></div>
-            </div>
+        <div class="form-options-affix">
+        <ul ng-if="groups.length > 1" class="nav nav-tabs nav-justified">
+            <li ng-repeat="group in groups" ng-class="{active:activeGroup==group}">
+                <a href='#' ng-click="selectGroup($event, group)">{{group}}</a>
+            </li>
+        </ul>
+        <div class='form-horizontal'>
+            <div class='fb-component' ng-repeat="component in components"
+                fb-component="component"></div>
+        </div>
         </div>
         """
     controller: 'fbComponentsController'

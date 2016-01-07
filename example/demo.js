@@ -34,12 +34,6 @@
     }
   ]);
 
-  $(document).ready(function() {
-    return $('#form-options-affix').affix({
-      offset: {
-        top: 298
-      }
-    });
-  });
+  $(document).ready(function() {});
 
 }).call(this);

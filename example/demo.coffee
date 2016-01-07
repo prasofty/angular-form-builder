@@ -44,6 +44,4 @@ angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'colo
 ]
 
 $(document).ready ->
-    $('#form-options-affix').affix
-        offset:
-            top: 298
+    
