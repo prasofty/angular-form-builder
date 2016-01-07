@@ -277,36 +277,39 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         template:
             """
             <div class="form-group">
-                <label for="{{formName+index}}" class="col-sm-4 control-label">{{label}}</label>
-                <div class="col-sm-8">
-                    <select ng-options="value for value in options" id="{{formName+index}}" class="form-control"
-                        ng-model="inputText" ng-init="inputText = options[0]"/>
-                    <p class='help-block'>{{description}}</p>
+                <label for="{{formName+index}}" control-label" ng-class="{'fb-required':required, 'fb-optional':required == 0, 'col-sm-3': config.labelPosition == 'left'}">{{label}}</label>
+                <div ng-class="{'col-sm-9': config.labelPosition == 'left'}">
+                        <select ng-options="value for value in options" id="{{formName+index}}" class="form-control"
+                            ng-model="inputText" ng-init="inputText = options[0]"/>
+                        <p class='help-block'>{{description}}</p>
                 </div>
             </div>
             """
         popoverTemplate:
             """
-            <form>
-                <div class="form-group">
-                    <label class='control-label'>Label</label>
-                    <input type='text' ng-model="label" validator="[required]" class='form-control'/>
-                </div>
-                <div class="form-group">
-                    <label class='control-label'>Description</label>
-                    <input type='text' ng-model="description" class='form-control'/>
-                </div>
-                <div class="form-group">
-                    <label class='control-label'>Options</label>
-                    <textarea class="form-control" rows="3" ng-model="optionsText"/>
-                </div>
-
-                <hr/>
-                <div class='form-group'>
-                    <input type='submit' ng-click="popover.save($event)" class='btn btn-primary' value='Save'/>
-                    <input type='button' ng-click="popover.cancel($event)" class='btn btn-default' value='Cancel'/>
-                    <input type='button' ng-click="popover.remove($event)" class='btn btn-danger' value='Delete'/>
-                </div>
-            </form>
+                <form>
+                    <div class="form-group">
+                        <label class='control-label'>Label</label>
+                        <input type='text' ng-model="label" validator="[required]" class='form-control'/>
+                    </div>
+                    <div class="form-group">
+                        <label class='control-label'>Description</label>
+                        <input type='text' ng-model="description" class='form-control'/>
+                    </div>
+                    <div class="form-group">
+                        <label class='control-label'>Field Name</label>
+                        <input type='text' ng-model="fieldName" validator="[required]" class='form-control'/>
+                    </div>
+                    <div class="form-group">
+                        <label class='control-label'>Options</label>
+                        <textarea class="form-control" rows="3" ng-model="optionsText"/>
+                    </div>
+                    <hr/>
+                    <div class='form-group'>
+                        <input type='submit' ng-click="popover.save($event)" class='btn btn-primary' value='Save'/>
+                        <input type='button' ng-click="popover.cancel($event)" class='btn btn-default' value='Cancel'/>
+                        <input type='button' ng-click="popover.remove($event)" class='btn btn-danger' value='Delete'/>
+                    </div>
+                </form>
             """
 ]
