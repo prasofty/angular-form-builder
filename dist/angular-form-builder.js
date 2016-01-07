@@ -38,6 +38,7 @@
           formObject.placeholder = $scope.placeholder;
           formObject.required = $scope.required;
           formObject.options = $scope.options;
+          formObject.validation = $scope.validation;
           formObject.design = $scope.design;
           return formObject.extraConfigs = $scope.extraConfigs;
         }, true);

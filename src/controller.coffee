@@ -41,6 +41,7 @@ angular.module 'builder.controller', ['builder.provider']
             formObject.placeholder = $scope.placeholder;
             formObject.required = $scope.required;
             formObject.options = $scope.options;
+            formObject.validation = $scope.validation;
             formObject.design = $scope.design;
             formObject.extraConfigs = $scope.extraConfigs;
         , yes
