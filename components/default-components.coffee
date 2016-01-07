@@ -312,4 +312,65 @@ angular.module 'builder.components', ['builder', 'validator.rules']
                     </div>
                 </form>
             """
+    # ----------------------------------------
+    # File Uploader
+    # ----------------------------------------
+    $builderProvider.registerComponent 'fileUploader',
+        group: 'Default'
+        label: 'fileUploader'
+        description: 'description'
+        placeholder: 'placeholder'
+        required: false
+        thumbnail:
+            """
+                <div class="form-builder-element">
+                    <i class="select-icon">File upload</i>
+                    <div class="form-builder-element-title">
+                     <h6>File upload</h6>
+                    </div>
+                </div>
+            """
+        template:
+            """
+                <div class="form-group">
+                    <label for="{{formName+index}}" control-label" ng-class="{'fb-required':required, 'fb-optional':required == 0, 'col-sm-3': config.labelPosition == 'left'}">{{label}}</label>
+                    <div ng-class="{'col-sm-9': config.labelPosition == 'left'}">
+                        <input type = "file" id="{{formName+index}}" class="form-control" validator-required="{{required}}" />
+                        <p class='help-block'>{{description}}</p>
+                    </div>
+                </div>
+            """
+        popoverTemplate:
+            """
+                <form>
+                    <div class="form-group">
+                        <label class='control-label'>Label</label>
+                        <input type='text' ng-model="label" validator="[required]" class='form-control'/>
+                    </div>
+                    <div class="form-group">
+                        <label class='control-label'>Description</label>
+                        <input type='text' ng-model="description" class='form-control'/>
+                    </div>
+                    <div class="form-group">
+                        <label class='control-label'>Field Name</label>
+                        <input type='text' ng-model="fieldName" class='form-control' name="fieldName" validator="[required]" required/>
+                    </div>
+                    <div class="form-group">
+                        <label class='control-label'>Placeholder</label>
+                        <input type='text' ng-model="placeholder" class='form-control'/>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type='checkbox' ng-model="required" />
+                            Required</label>
+                    </div>
+
+                    <hr/>
+                    <div class='form-group'>
+                        <input type='submit' ng-click="popover.save($event)" class='btn btn-primary' value='Save'/>
+                        <input type='button' ng-click="popover.cancel($event)" class='btn btn-default' value='Cancel'/>
+                        <input type='button' ng-click="popover.remove($event)" class='btn btn-danger' value='Delete'/>
+                    </div>
+                </form>
+            """
 ]
