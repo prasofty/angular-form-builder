@@ -31,13 +31,15 @@
         var component;
         copyObjectToScope(formObject, $scope);
         $scope.optionsText = formObject.options.join('\n');
-        $scope.$watch('[label, description, placeholder, required, options, validation]', function() {
+        $scope.$watch('[fieldName, label, description, placeholder, required, options, validation, design, extraConfigs]', function() {
+          formObject.fieldName = $scope.fieldName;
           formObject.label = $scope.label;
           formObject.description = $scope.description;
           formObject.placeholder = $scope.placeholder;
           formObject.required = $scope.required;
           formObject.options = $scope.options;
-          return formObject.validation = $scope.validation;
+          formObject.design = $scope.design;
+          return formObject.extraConfigs = $scope.extraConfigs;
         }, true);
         $scope.$watch('optionsText', function(text) {
           var x;
@@ -66,12 +68,15 @@
           Backup input value.
            */
           return this.model = {
+            fieldName: $scope.fieldName,
             label: $scope.label,
             description: $scope.description,
             placeholder: $scope.placeholder,
             required: $scope.required,
             optionsText: $scope.optionsText,
-            validation: $scope.validation
+            validation: $scope.validation,
+            design: $scope.design,
+            extraConfigs: $scope.extraConfigs
           };
         },
         rollback: function() {
@@ -87,7 +92,10 @@
           $scope.placeholder = this.model.placeholder;
           $scope.required = this.model.required;
           $scope.optionsText = this.model.optionsText;
-          return $scope.validation = this.model.validation;
+          $scope.validation = this.model.validation;
+          $scope.fieldName = this.model.fieldName;
+          $scope.design = this.model.design;
+          return $scope.extraConfigs = this.model.extraConfigs;
         }
       };
     }
@@ -159,6 +167,7 @@
         input = {
           id: $scope.formObject.id,
           label: $scope.formObject.label,
+          fieldName: $scope.formObject.fieldName,
           value: value != null ? value : ''
         };
         return $scope.$parent.input.splice($scope.$index, 1, input);
@@ -171,29 +180,56 @@
 (function() {
   angular.module('builder.directive', ['builder.provider', 'builder.controller', 'builder.drag', 'validator']).directive('fbBuilder', [
     '$injector', function($injector) {
-      var $builder, $drag;
+      var $builder, $compile, $drag;
       $builder = $injector.get('$builder');
       $drag = $injector.get('$drag');
+      $compile = $injector.get('$compile');
       return {
         restrict: 'A',
         scope: {
           fbBuilder: '='
         },
-        template: "<div class='form-horizontal'>\n    <div class='fb-form-object-editable' ng-repeat=\"object in formObjects\"\n        fb-form-object-editable=\"object\"></div>\n</div>",
+        template: "<div class=\"panel panel-default\">\n    <style type='text/css'>\n        .fb-builder .panel {\n            background-color: {{config.formBackgroundColor}};\n        }\n        .fb-builder .panel .panel-body {\n            min-height: 300px;\n        }\n        .fb-builder .form-group {\n            background-color: {{config.fieldBackgroundColor}};\n            padding: 10px;\n            margin-bottom: 0;\n        }\n        .fb-builder .form-group label.fb-optional {\n            color: {{config.optionalLabelColor}};\n        }\n        .fb-builder .form-group label.fb-optional:after {\n            content: ' {{config.optionalIndicator}}';\n        }\n        .fb-builder .form-group label.fb-required {\n            color: {{config.requiredLabelColor}};\n        }\n        .fb-builder .form-group label.fb-required:after {\n            content: ' {{config.requiredIndicator}}';\n        }\n    </style>\n    <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">\n            Form Builder\n            <span class=\"pull-right\"><a class=\"form-settings\"><i class=\"fa fa-cog\"></i></a></span>\n        </h3>\n        <div class=\"form-settings-popover hide\">\n            <form class=\"config-popover\">\n                <div class=\"form-group\">\n                  <label class='control-label'>Required Indicator</label>\n                  <!-- FIXME validation for required Indicator -->\n                  <input type='text' ng-model=\"config.requiredIndicator\" validator=\"[required]\" class='form-control'/>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Required Label Color</label>\n                  <color-picker ng-model=\"config.requiredLabelColor\" color-picker-format=\"rgba\"></color-picker>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Optional Indicator</label>\n                  <!-- FIXME validation for required Indicator -->\n                  <input type='text' ng-model=\"config.optionalIndicator\" validator=\"[required]\" class='form-control'/>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Optional Label Color</label>\n                  <color-picker ng-model=\"config.optionalLabelColor\" color-picker-format=\"rgba\"></color-picker>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Label Position</label>\n                  <!-- FIXME select default value -->\n                  <select ng-model=\"config.labelPosition\" class=\"form-control\">\n                    <option value=\"above\">Above</option>\n                    <option value=\"left\">Left</option>\n                  </select>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Form Background Color</label>\n                  <color-picker ng-model=\"config.formBackgroundColor\" color-picker-format=\"rgba\"></color-picker>\n                </div>\n                <div class=\"form-group\">\n                  <label class='control-label'>Field Background Color</label>\n                  <color-picker ng-model=\"config.fieldBackgroundColor\" color-picker-format=\"rgba\"></color-picker>\n                </div>\n            </form>\n        </div>\n    </div>\n    <div class=\"panel-body\">\n        <div ng-class=\"{'form-horizontal': config.labelPosition == 'left'}\">\n            <div class='fb-form-object-editable' ng-repeat=\"object in formObjects\"\n                fb-form-object-editable=\"object\"></div>\n        </div>\n    </div>\n</div>",
         link: function(scope, element, attrs) {
-          var beginMove, _base, _name;
+          var beginMove, configPopover, _base, _name;
           scope.formName = attrs.fbBuilder;
           if ((_base = $builder.forms)[_name = scope.formName] == null) {
             _base[_name] = [];
           }
           scope.formObjects = $builder.forms[scope.formName];
           beginMove = true;
+          scope.config = $builder.config;
+          configPopover = {
+            id: "fb-" + (Math.random().toString().substr(2)),
+            view: null,
+            html: $(element).find('.form-settings-popover').html()
+          };
+          configPopover.html = $(configPopover.html).addClass(configPopover.id);
+          configPopover.view = $compile(configPopover.html)(scope);
+          $(element).addClass(configPopover.id);
+          $(element).find('.form-settings').popover({
+            html: true,
+            title: 'Form Settings',
+            content: configPopover.view,
+            container: 'body',
+            placement: $builder.config.popoverPlacement
+          });
+          $(element).find('.form-settings').on('show.bs.popover', function() {
+            return $("div.fb-form-object-editable").popover('hide');
+          });
+          $('body').on('click', function(e) {
+            return $(element).find('.form-settings').each(function() {
+              if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                return $(this).popover('hide');
+              }
+            });
+          });
           $(element).addClass('fb-builder');
           return $drag.droppable($(element), {
             move: function(e) {
               var $empty, $formObject, $formObjects, height, index, offset, positions, _i, _j, _ref, _ref1;
               if (beginMove) {
-                $("div.fb-form-object-editable").popover('hide');
+                $("div.fb-form-object-editable, div.fb-builder .form-settings").popover('hide');
                 beginMove = false;
               }
               $formObjects = $(element).find('.fb-form-object-editable:not(.empty,.dragging)');
@@ -227,7 +263,7 @@
             },
             out: function() {
               if (beginMove) {
-                $("div.fb-form-object-editable").popover('hide');
+                $("div.fb-form-object-editable, div.fb-builder .form-settings").popover('hide');
                 beginMove = false;
               }
               return $(element).find('.empty').remove();
@@ -283,6 +319,7 @@
           scope.inputArray = [];
           scope.$component = $builder.components[scope.formObject.component];
           scope.setupScope(scope.formObject);
+          scope.config = $builder.config;
           scope.$watch('$component.template', function(template) {
             var view;
             if (!template) {
@@ -371,7 +408,7 @@
             if ($drag.isMouseMoved()) {
               return false;
             }
-            $("div.fb-form-object-editable:not(." + popover.id + ")").popover('hide');
+            $("div.fb-form-object-editable:not(." + popover.id + "), div.fb-builder .form-settings").popover('hide');
             $popover = $("form." + popover.id).closest('.popover');
             if ($popover.length > 0) {
               elementOrigin = $(element).offset().top + $(element).height() / 2;
@@ -442,14 +479,18 @@
               componentName: scope.component.name
             }
           });
-          return scope.$watch('component.template', function(template) {
-            var view;
-            if (!template) {
-              return;
-            }
-            view = $compile(template)(scope);
-            return $(element).html(view);
-          });
+          if (scope.component.thumbnail) {
+            return $(element).html(scope.component.thumbnail);
+          } else {
+            return scope.$watch('component.template', function(template) {
+              var view;
+              if (!template) {
+                return;
+              }
+              view = $compile(template)(scope);
+              return $(element).html(view);
+            });
+          }
         }
       };
     }
@@ -463,7 +504,7 @@
           input: '=ngModel',
           "default": '=fbDefault'
         },
-        template: "<div class='fb-form-object' ng-repeat=\"object in form\" fb-form-object=\"object\"></div>",
+        template: "<div class=\"fb-form\">\n    <style type='text/css'>\n        .fb-form {\n            background-color: {{config.formBackgroundColor}};\n            min-height: 300px;\n            padding: 15px;\n        }\n        .fb-form .form-horizontal .form-group {\n            margin-left: 0;\n            margin-right: 0;\n        }\n        .fb-form .form-group {\n            background-color: {{config.fieldBackgroundColor}};\n            padding: 10px;\n        }\n        .fb-form .form-group label.fb-optional {\n            color: {{config.optionalLabelColor}};\n        }\n        .fb-form .form-group label.fb-optional:after {\n            content: ' {{config.optionalIndicator}}';\n        }\n        .fb-form .form-group label.fb-required {\n            color: {{config.requiredLabelColor}};\n        }\n        .fb-form .form-group label.fb-required:after {\n            content: ' {{config.requiredIndicator}}';\n        }\n    </style>\n    <div ng-class=\"{'form-horizontal': config.labelPosition == 'left'}\">\n        <div class='fb-form-object' ng-repeat=\"object in form\" fb-form-object=\"object\"></div>\n    </div>\n</div>",
         controller: 'fbFormController',
         link: function(scope, element, attrs) {
           var $builder, _base, _name;
@@ -471,7 +512,8 @@
           if ((_base = $builder.forms)[_name = scope.formName] == null) {
             _base[_name] = [];
           }
-          return scope.form = $builder.forms[scope.formName];
+          scope.form = $builder.forms[scope.formName];
+          return scope.config = $builder.config;
         }
       };
     }
@@ -982,7 +1024,17 @@
     $http = null;
     $templateCache = null;
     this.config = {
-      popoverPlacement: 'right'
+      popoverPlacement: 'right',
+      requiredIndicator: '*',
+      requiredLabelColor: 'hsl(0, 73%, 53%)',
+      optionalIndicator: '#',
+      optionalLabelColor: '#000000',
+      labelPosition: 'above',
+      fieldBackgroundColor: 'hsla(163, 55%, 90%, 0.63)',
+      formBackgroundColor: 'hsla(216, 68%, 46%, 0.49)',
+      errorColor: '#ff0000',
+      errorPosition: 'below',
+      successMessage: 'Success message received'
     };
     this.components = {};
     this.groups = [];
@@ -993,7 +1045,7 @@
       "default": []
     };
     this.convertComponent = function(name, component) {
-      var result, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      var result, _ref, _ref1, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       result = {
         name: name,
         group: (_ref = component.group) != null ? _ref : 'Default',
@@ -1009,7 +1061,8 @@
         template: component.template,
         templateUrl: component.templateUrl,
         popoverTemplate: component.popoverTemplate,
-        popoverTemplateUrl: component.popoverTemplateUrl
+        popoverTemplateUrl: component.popoverTemplateUrl,
+        thumbnail: (_ref10 = component.thumbnail) != null ? _ref10 : ''
       };
       if (!result.template && !result.templateUrl) {
         console.error("The template is empty.");
@@ -1020,7 +1073,7 @@
       return result;
     };
     this.convertFormObject = function(name, formObject) {
-      var component, result, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
+      var component, result, _ref, _ref1, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       if (formObject == null) {
         formObject = {};
       }
@@ -1038,7 +1091,10 @@
         placeholder: (_ref4 = formObject.placeholder) != null ? _ref4 : component.placeholder,
         options: (_ref5 = formObject.options) != null ? _ref5 : component.options,
         required: (_ref6 = formObject.required) != null ? _ref6 : component.required,
-        validation: (_ref7 = formObject.validation) != null ? _ref7 : component.validation
+        validation: (_ref7 = formObject.validation) != null ? _ref7 : component.validation,
+        fieldName: (_ref8 = formObject.fieldName) != null ? _ref8 : component.fieldName,
+        design: (_ref9 = formObject.design) != null ? _ref9 : component.design,
+        extraConfigs: (_ref10 = formObject.extraConfigs) != null ? _ref10 : component.extraConfigs
       };
       return result;
     };

@@ -18,8 +18,20 @@ angular.module 'builder.provider', []
     $http = null
     $templateCache = null
 
+    # config
     @config =
         popoverPlacement: 'right'
+        requiredIndicator: '*'
+        requiredLabelColor: 'hsl(0, 73%, 53%)'
+        optionalIndicator: '#'
+        optionalLabelColor: '#000000'
+        labelPosition: 'above'
+        fieldBackgroundColor: 'hsla(163, 55%, 90%, 0.63)'
+        formBackgroundColor: 'hsla(216, 68%, 46%, 0.49)'
+        errorColor: '#ff0000'
+        errorPosition: 'below'
+        successMessage: 'Success message received'
+
     # all components
     @components = {}
     # all groups of components
@@ -54,6 +66,7 @@ angular.module 'builder.provider', []
             templateUrl: component.templateUrl
             popoverTemplate: component.popoverTemplate
             popoverTemplateUrl: component.popoverTemplateUrl
+            thumbnail: component.thumbnail ? ''
         if not result.template and not result.templateUrl
             console.error "The template is empty."
         if not result.popoverTemplate and not result.popoverTemplateUrl
@@ -74,6 +87,9 @@ angular.module 'builder.provider', []
             options: formObject.options ? component.options
             required: formObject.required ? component.required
             validation: formObject.validation ? component.validation
+            fieldName: formObject.fieldName ? component.fieldName
+            design: formObject.design ? component.design
+            extraConfigs: formObject.extraConfigs ? component.extraConfigs
         result
 
     @reindexFormObject = (name) =>

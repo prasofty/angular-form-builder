@@ -16,11 +16,20 @@ angular.module 'builder.components', ['builder', 'validator.rules']
             {label: 'email', rule: '[email]'}
             {label: 'url', rule: '[url]'}
         ]
+        thumbnail:
+            """
+                <div class="form-builder-element">
+                  <i class="textinput-icon">Text Input</i>
+                  <div class="form-builder-element-title">
+                    <h6>Text Input</h6>
+                  </div>
+                </div>
+            """
         template:
             """
             <div class="form-group">
-                <label for="{{formName+index}}" class="col-sm-4 control-label" ng-class="{'fb-required':required}">{{label}}</label>
-                <div class="col-sm-8">
+                <label for="{{formName+index}}" class="control-label" ng-class="{'fb-required':required, 'fb-optional':required == 0, 'col-sm-3': config.labelPosition == 'left'}">{{label}}</label>
+                <div ng-class="{'col-sm-9': config.labelPosition == 'left'}">
                     <input type="text" ng-model="inputText" validator-required="{{required}}" validator-group="{{formName}}" id="{{formName+index}}" class="form-control" placeholder="{{placeholder}}"/>
                     <p class='help-block'>{{description}}</p>
                 </div>
@@ -32,6 +41,10 @@ angular.module 'builder.components', ['builder', 'validator.rules']
                 <div class="form-group">
                     <label class='control-label'>Label</label>
                     <input type='text' ng-model="label" validator="[required]" class='form-control'/>
+                </div>
+                <div class="form-group">
+                    <label class='control-label'>Field Name</label>
+                    <input type='text' ng-model="fieldName" validator="[required]" class='form-control'/>
                 </div>
                 <div class="form-group">
                     <label class='control-label'>Description</label>
@@ -69,12 +82,21 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         description: 'description'
         placeholder: 'placeholder'
         required: no
+        thumbnail:
+            """
+                <div class="form-builder-element">
+                    <i class="textarea-icon">Text Area</i>
+                    <div class="form-builder-element-title">
+                     <h6>Textarea</h6>
+                    </div>
+                </div>
+            """
         template:
             """
             <div class="form-group">
-                <label for="{{formName+index}}" class="col-sm-4 control-label" ng-class="{'fb-required':required}">{{label}}</label>
-                <div class="col-sm-8">
-                    <textarea type="text" ng-model="inputText" validator-required="{{required}}" validator-group="{{formName}}" id="{{formName+index}}" class="form-control" rows='6' placeholder="{{placeholder}}"/>
+                <label for="{{formName+index}}" class="control-label" ng-class="{'fb-required':required, 'fb-optional':required == 0, 'col-sm-3': config.labelPosition == 'left'}">{{label}}</label>
+                <div ng-class="{'col-sm-9': config.labelPosition == 'left'}">
+                    <textarea ng-model="inputText" validator-required="{{required}}" rows=\"3\" validator-group="{{formName}}" id="{{formName+index}}" class="form-control" placeholder="{{placeholder}}"/>
                     <p class='help-block'>{{description}}</p>
                 </div>
             </div>
@@ -120,11 +142,20 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         required: no
         options: ['value one', 'value two']
         arrayToText: yes
+        thumbnail:
+            """
+                <div class="form-builder-element">
+                    <i class="checkbox-icon">Checkbox</i>
+                    <div class="form-builder-element-title">
+                     <h6>Checkbox</h6>
+                    </div>
+                </div>
+            """
         template:
             """
-            <div class="form-group">
-                <label for="{{formName+index}}" class="col-sm-4 control-label" ng-class="{'fb-required':required}">{{label}}</label>
-                <div class="col-sm-8">
+           <div class="form-group">
+                <label for="{{formName+index}}" class="control-label" ng-class="{'fb-required':required, 'fb-optional':required == 0, 'col-sm-3': config.labelPosition == 'left'}">{{label}}</label>
+                <div ng-class="{'col-sm-9': config.labelPosition == 'left'}">
                     <input type='hidden' ng-model="inputText" validator-required="{{required}}" validator-group="{{formName}}"/>
                     <div class='checkbox' ng-repeat="item in options track by $index">
                         <label><input type='checkbox' ng-model="$parent.inputArray[$index]" value='item'/>
@@ -176,11 +207,20 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         placeholder: 'placeholder'
         required: no
         options: ['value one', 'value two']
+        thumbnail:
+            """
+                <div class="form-builder-element">
+                    <i class="radiobutton-icon">Radio</i>
+                    <div class="form-builder-element-title">
+                     <h6>Radio</h6>
+                    </div>
+                </div>
+            """
         template:
             """
             <div class="form-group">
-                <label for="{{formName+index}}" class="col-sm-4 control-label" ng-class="{'fb-required':required}">{{label}}</label>
-                <div class="col-sm-8">
+                <label for="{{formName+index}}" class="control-label" ng-class="{'fb-required':required, 'fb-optional':required == 0, 'col-sm-3': config.labelPosition == 'left'}">{{label}}</label>
+                <div ng-class="{'col-sm-9': config.labelPosition == 'left'}">
                     <div class='radio' ng-repeat="item in options track by $index">
                         <label><input name='{{formName+index}}' ng-model="$parent.inputText" validator-group="{{formName}}" value='{{item}}' type='radio'/>
                             {{item}}
@@ -225,6 +265,15 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         placeholder: 'placeholder'
         required: no
         options: ['value one', 'value two']
+        thumbnail:
+            """
+                <div class="form-builder-element">
+                    <i class="select-icon">Select</i>
+                    <div class="form-builder-element-title">
+                     <h6>Select</h6>
+                    </div>
+                </div>
+            """
         template:
             """
             <div class="form-group">

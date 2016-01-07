@@ -17,15 +17,89 @@ angular.module 'builder.directive', [
     # providers
     $builder = $injector.get '$builder'
     $drag = $injector.get '$drag'
+    $compile = $injector.get '$compile'
 
     restrict: 'A'
     scope:
         fbBuilder: '='
     template:
         """
-        <div class='form-horizontal'>
-            <div class='fb-form-object-editable' ng-repeat="object in formObjects"
-                fb-form-object-editable="object"></div>
+        <div class="panel panel-default">
+            <style type='text/css'>
+                .fb-builder .panel {
+                    background-color: {{config.formBackgroundColor}};
+                }
+                .fb-builder .panel .panel-body {
+                    min-height: 300px;
+                }
+                .fb-builder .form-group {
+                    background-color: {{config.fieldBackgroundColor}};
+                    padding: 10px;
+                    margin-bottom: 0;
+                }
+                .fb-builder .form-group label.fb-optional {
+                    color: {{config.optionalLabelColor}};
+                }
+                .fb-builder .form-group label.fb-optional:after {
+                    content: ' {{config.optionalIndicator}}';
+                }
+                .fb-builder .form-group label.fb-required {
+                    color: {{config.requiredLabelColor}};
+                }
+                .fb-builder .form-group label.fb-required:after {
+                    content: ' {{config.requiredIndicator}}';
+                }
+            </style>
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Form Builder
+                    <span class="pull-right"><a class="form-settings"><i class="fa fa-cog"></i></a></span>
+                </h3>
+                <div class="form-settings-popover hide">
+                    <form class="config-popover">
+                        <div class="form-group">
+                          <label class='control-label'>Required Indicator</label>
+                          <!-- FIXME validation for required Indicator -->
+                          <input type='text' ng-model="config.requiredIndicator" validator="[required]" class='form-control'/>
+                        </div>
+                        <div class="form-group">
+                          <label class='control-label'>Required Label Color</label>
+                          <color-picker ng-model="config.requiredLabelColor" color-picker-format="rgba"></color-picker>
+                        </div>
+                        <div class="form-group">
+                          <label class='control-label'>Optional Indicator</label>
+                          <!-- FIXME validation for required Indicator -->
+                          <input type='text' ng-model="config.optionalIndicator" validator="[required]" class='form-control'/>
+                        </div>
+                        <div class="form-group">
+                          <label class='control-label'>Optional Label Color</label>
+                          <color-picker ng-model="config.optionalLabelColor" color-picker-format="rgba"></color-picker>
+                        </div>
+                        <div class="form-group">
+                          <label class='control-label'>Label Position</label>
+                          <!-- FIXME select default value -->
+                          <select ng-model="config.labelPosition" class="form-control">
+                            <option value="above">Above</option>
+                            <option value="left">Left</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label class='control-label'>Form Background Color</label>
+                          <color-picker ng-model="config.formBackgroundColor" color-picker-format="rgba"></color-picker>
+                        </div>
+                        <div class="form-group">
+                          <label class='control-label'>Field Background Color</label>
+                          <color-picker ng-model="config.fieldBackgroundColor" color-picker-format="rgba"></color-picker>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div ng-class="{'form-horizontal': config.labelPosition == 'left'}">
+                    <div class='fb-form-object-editable' ng-repeat="object in formObjects"
+                        fb-form-object-editable="object"></div>
+                </div>
+            </div>
         </div>
         """
     link: (scope, element, attrs) ->
@@ -37,12 +111,43 @@ angular.module 'builder.directive', [
         scope.formObjects = $builder.forms[scope.formName]
         beginMove = yes
 
+        # getting config into popover
+        scope.config = $builder.config
+
+        configPopover =
+            id: "fb-#{Math.random().toString().substr(2)}"
+            view: null
+            html: $(element).find('.form-settings-popover').html()
+        configPopover.html = $(configPopover.html).addClass configPopover.id
+        # compile popover
+        configPopover.view = $compile(configPopover.html) scope
+        $(element).addClass configPopover.id
+
+        $(element).find('.form-settings').popover
+            html: yes
+            title: 'Form Settings'
+            content: configPopover.view
+            container: 'body'
+            placement: $builder.config.popoverPlacement
+
+        $(element).find('.form-settings').on 'show.bs.popover', ->
+            $("div.fb-form-object-editable").popover 'hide'
+
+        $('body').on 'click', (e) ->
+            $(element).find('.form-settings').each ->
+                if !$(this).is(e.target) and $(this).has(e.target).length == 0 and $('.popover').has(e.target).length == 0
+                    $(this).popover 'hide'
+        # FIXME popover right view
+        # FIXME popover position
+
+        # end popover
+
         $(element).addClass 'fb-builder'
         $drag.droppable $(element),
             move: (e) ->
                 if beginMove
                     # hide all popovers
-                    $("div.fb-form-object-editable").popover 'hide'
+                    $("div.fb-form-object-editable, div.fb-builder .form-settings").popover 'hide'
                     beginMove = no
 
                 $formObjects = $(element).find '.fb-form-object-editable:not(.empty,.dragging)'
@@ -78,7 +183,7 @@ angular.module 'builder.directive', [
             out: ->
                 if beginMove
                     # hide all popovers
-                    $("div.fb-form-object-editable").popover 'hide'
+                    $("div.fb-form-object-editable, div.fb-builder .form-settings").popover 'hide'
                     beginMove = no
 
                 $(element).find('.empty').remove()
@@ -128,6 +233,7 @@ angular.module 'builder.directive', [
         scope.$component = $builder.components[scope.formObject.component]
         # setup scope
         scope.setupScope scope.formObject
+        scope.config = $builder.config
 
         # compile formObject
         scope.$watch '$component.template', (template) ->
@@ -209,7 +315,7 @@ angular.module 'builder.directive', [
         $(element).on 'show.bs.popover', ->
             return no if $drag.isMouseMoved()
             # hide other popovers
-            $("div.fb-form-object-editable:not(.#{popover.id})").popover 'hide'
+            $("div.fb-form-object-editable:not(.#{popover.id}), div.fb-builder .form-settings").popover 'hide'
 
             $popover = $("form.#{popover.id}").closest '.popover'
             if $popover.length > 0
@@ -295,10 +401,13 @@ angular.module 'builder.directive', [
             object:
                 componentName: scope.component.name
 
-        scope.$watch 'component.template', (template) ->
-            return if not template
-            view = $compile(template) scope
-            $(element).html view
+        if scope.component.thumbnail
+            $(element).html scope.component.thumbnail
+        else
+            scope.$watch 'component.template', (template) ->
+                return if not template
+                view = $compile(template) scope
+                $(element).html view
 ]
 
 
@@ -315,7 +424,38 @@ angular.module 'builder.directive', [
         default: '=fbDefault'
     template:
         """
-        <div class='fb-form-object' ng-repeat="object in form" fb-form-object="object"></div>
+        <div class="fb-form">
+            <style type='text/css'>
+                .fb-form {
+                    background-color: {{config.formBackgroundColor}};
+                    min-height: 300px;
+                    padding: 15px;
+                }
+                .fb-form .form-horizontal .form-group {
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+                .fb-form .form-group {
+                    background-color: {{config.fieldBackgroundColor}};
+                    padding: 10px;
+                }
+                .fb-form .form-group label.fb-optional {
+                    color: {{config.optionalLabelColor}};
+                }
+                .fb-form .form-group label.fb-optional:after {
+                    content: ' {{config.optionalIndicator}}';
+                }
+                .fb-form .form-group label.fb-required {
+                    color: {{config.requiredLabelColor}};
+                }
+                .fb-form .form-group label.fb-required:after {
+                    content: ' {{config.requiredIndicator}}';
+                }
+            </style>
+            <div ng-class="{'form-horizontal': config.labelPosition == 'left'}">
+                <div class='fb-form-object' ng-repeat="object in form" fb-form-object="object"></div>
+            </div>
+        </div>
         """
     controller: 'fbFormController'
     link: (scope, element, attrs) ->
@@ -325,6 +465,9 @@ angular.module 'builder.directive', [
         # get the form for controller
         $builder.forms[scope.formName] ?= []
         scope.form = $builder.forms[scope.formName]
+        scope.config = $builder.config
+
+
 ]
 
 # ----------------------------------------
