@@ -42,3 +42,8 @@ angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'colo
         .success -> console.log 'success'
         .error -> console.log 'error'
 ]
+
+$(document).ready ->
+    $('#form-options-affix').affix
+        offset:
+            top: 298

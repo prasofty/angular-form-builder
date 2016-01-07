@@ -47,3 +47,51 @@
         width: 240px;
     }
 }
+
+.form-builder-element {
+    border: 1px solid #CCCCCC;
+    border-radius: 1px;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+    -o-box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+    height: 100px;
+    margin-bottom: 15px;
+    &:hover,
+    &:active{ cursor: move; }
+
+    .form-builder-element-title {
+        text-transform: uppercase;
+        width: 100%;
+        text-align: center;
+        h6 {
+            font-weight: bold;
+        }
+    }
+}
+
+//Form Builder Icon List
+$inputs: (
+    textinput    '/dist/images/textinput-icon.svg'    80% 65px,
+    textarea     '/dist/images/textarea-icon.svg'     60% 65px,
+    checkbox     '/dist/images/checkbox-icon.svg'     60% 60px,
+    radiobutton  '/dist/images/radio-button-icon.svg'  60% 60px,
+    select       '/dist/images/select-input-icon.svg'   	   75% 60px,
+    date         '/dist/images/date-icon.svg'   	   80% 65px,
+    date-time    '/dist/images/date-time-icon.svg'     80% 65px,
+);
+
+@each $input in $inputs{
+    $name:   nth($input, 1);
+    $image:  nth($input, 2);
+    $size:   nth($input, 3);
+    $height: nth($input, 4);
+
+    .#{$name}-icon{
+        background: transparent url($image) no-repeat center center;
+        background-size: $size;
+        display: block;
+        height: $height;
+        text-indent: -9999px;
+    }
+}

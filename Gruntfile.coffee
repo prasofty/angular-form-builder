@@ -28,6 +28,14 @@ module.exports = (grunt) ->
                 files:
                     'dist/angular-form-builder.min.js': 'dist/angular-form-builder.js'
                     'dist/angular-form-builder-components.min.js': 'dist/angular-form-builder-components.js'
+        copy:
+            images:
+                expand:     true,
+                cwd:        'src/images/',
+                src:        ['**/*'],
+                dest:       'dist/images/',
+                filter:     'isFile',
+                flatten:    true
 
         watch:
             compass:
@@ -62,12 +70,14 @@ module.exports = (grunt) ->
         'compass'
         'coffee'
         'connect'
+        'copy'
         'watch'
     ]
     grunt.registerTask 'build', [
         'compass'
         'coffee'
         'uglify'
+        'copy'
     ]
     grunt.registerTask 'test', ['karma']
 
@@ -80,3 +90,4 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-contrib-connect'
     grunt.loadNpmTasks 'grunt-karma'
     grunt.loadNpmTasks 'grunt-contrib-uglify'
+    grunt.loadNpmTasks 'grunt-contrib-copy'

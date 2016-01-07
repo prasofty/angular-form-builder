@@ -18,12 +18,12 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         ]
         thumbnail:
             """
-                <figure class="form-builder-element">
-                  <i class="text-input-icon">Text Input</i>
-                  <figcaption class="form-builder-element-title">
+                <div class="form-builder-element">
+                  <i class="textinput-icon">Text Input</i>
+                  <div class="form-builder-element-title">
                     <h6>Text Input</h6>
-                  </figcaption>
-                </figure>
+                  </div>
+                </div>
             """
         template:
             """
@@ -84,12 +84,12 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         required: no
         thumbnail:
             """
-                <figure class="form-builder-element">
+                <div class="form-builder-element">
                     <i class="textarea-icon">Text Area</i>
-                    <figcaption class="form-builder-element-title">
+                    <div class="form-builder-element-title">
                      <h6>Textarea</h6>
-                    </figcaption>
-                </figure>
+                    </div>
+                </div>
             """
         template:
             """
@@ -144,12 +144,12 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         arrayToText: yes
         thumbnail:
             """
-                <figure class="form-builder-element">
+                <div class="form-builder-element">
                     <i class="checkbox-icon">Checkbox</i>
-                    <figcaption class="form-builder-element-title">
+                    <div class="form-builder-element-title">
                      <h6>Checkbox</h6>
-                    </figcaption>
-                </figure>
+                    </div>
+                </div>
             """
         template:
             """
@@ -209,12 +209,12 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         options: ['value one', 'value two']
         thumbnail:
             """
-                <figure class="form-builder-element">
-                    <i class="radio-icon">Radio</i>
-                    <figcaption class="form-builder-element-title">
+                <div class="form-builder-element">
+                    <i class="radiobutton-icon">Radio</i>
+                    <div class="form-builder-element-title">
                      <h6>Radio</h6>
-                    </figcaption>
-                </figure>
+                    </div>
+                </div>
             """
         template:
             """
@@ -267,12 +267,12 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         options: ['value one', 'value two']
         thumbnail:
             """
-                <figure class="form-builder-element">
+                <div class="form-builder-element">
                     <i class="select-icon">Select</i>
-                    <figcaption class="form-builder-element-title">
+                    <div class="form-builder-element-title">
                      <h6>Select</h6>
-                    </figcaption>
-                </figure>
+                    </div>
+                </div>
             """
         template:
             """
