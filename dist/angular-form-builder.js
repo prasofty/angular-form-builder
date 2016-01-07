@@ -212,7 +212,7 @@
             title: 'Form Settings',
             content: configPopover.view,
             container: 'body',
-            placement: 'bottom'
+            placement: $builder.config.popoverPlacement
           });
           $(element).find('.form-settings').on('show.bs.popover', function() {
             return $("div.fb-form-object-editable").popover('hide');

@@ -128,7 +128,7 @@ angular.module 'builder.directive', [
             title: 'Form Settings'
             content: configPopover.view
             container: 'body'
-            placement: 'bottom'
+            placement: $builder.config.popoverPlacement
 
         $(element).find('.form-settings').on 'show.bs.popover', ->
             $("div.fb-form-object-editable").popover 'hide'
