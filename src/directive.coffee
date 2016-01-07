@@ -32,6 +32,9 @@ angular.module 'builder.directive', [
                 .fb-builder .panel .panel-body {
                     min-height: 300px;
                 }
+                .fb-builder .success-message {
+                    padding: 0 10px;
+                }
                 .fb-builder .form-group {
                     background-color: {{config.fieldBackgroundColor}};
                     padding: 10px;
@@ -59,7 +62,6 @@ angular.module 'builder.directive', [
                     <form class="config-popover">
                         <div class="form-group">
                           <label class='control-label'>Required Indicator</label>
-                          <!-- FIXME validation for required Indicator -->
                           <input type='text' ng-model="config.requiredIndicator" validator="[required]" class='form-control'/>
                         </div>
                         <div class="form-group">
@@ -68,7 +70,6 @@ angular.module 'builder.directive', [
                         </div>
                         <div class="form-group">
                           <label class='control-label'>Optional Indicator</label>
-                          <!-- FIXME validation for required Indicator -->
                           <input type='text' ng-model="config.optionalIndicator" validator="[required]" class='form-control'/>
                         </div>
                         <div class="form-group">
@@ -77,7 +78,6 @@ angular.module 'builder.directive', [
                         </div>
                         <div class="form-group">
                           <label class='control-label'>Label Position</label>
-                          <!-- FIXME select default value -->
                           <select ng-model="config.labelPosition" class="form-control">
                             <option value="above">Above</option>
                             <option value="left">Left</option>
@@ -91,11 +91,20 @@ angular.module 'builder.directive', [
                           <label class='control-label'>Field Background Color</label>
                           <color-picker ng-model="config.fieldBackgroundColor" color-picker-format="rgba"></color-picker>
                         </div>
+                        <div class="form-group">
+                          <label class='control-label'>Success Message</label>
+                          <input type='text' ng-model="config.successMessage" validator="[required]" class='form-control'/>
+                        </div>
                     </form>
                 </div>
             </div>
             <div class="panel-body">
                 <div ng-class="{'form-horizontal': config.labelPosition == 'left'}">
+                    <div class="success-message">
+                        <div class="alert alert-success">
+                            {{config.successMessage}}
+                        </div>
+                    </div>
                     <div class='fb-form-object-editable' ng-repeat="object in formObjects"
                         fb-form-object-editable="object"></div>
                 </div>
@@ -137,8 +146,6 @@ angular.module 'builder.directive', [
             $(element).find('.form-settings').each ->
                 if !$(this).is(e.target) and $(this).has(e.target).length == 0 and $('.popover').has(e.target).length == 0
                     $(this).popover 'hide'
-        # FIXME popover right view
-        # FIXME popover position
 
         # end popover
 
@@ -431,6 +438,9 @@ angular.module 'builder.directive', [
                     min-height: 300px;
                     padding: 15px;
                 }
+                .fb-builder .success-message {
+                    padding: 0 10px;
+                }
                 .fb-form .form-horizontal .form-group {
                     margin-left: 0;
                     margin-right: 0;
@@ -452,6 +462,11 @@ angular.module 'builder.directive', [
                     content: ' {{config.requiredIndicator}}';
                 }
             </style>
+            <div class="success-message">
+                <div class="alert alert-success">
+                    {{config.successMessage}}
+                </div>
+            </div>
             <div ng-class="{'form-horizontal': config.labelPosition == 'left'}">
                 <div class='fb-form-object' ng-repeat="object in form" fb-form-object="object"></div>
             </div>

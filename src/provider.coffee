@@ -30,7 +30,7 @@ angular.module 'builder.provider', []
         formBackgroundColor: 'hsla(216, 68%, 46%, 0.49)'
         errorColor: '#ff0000'
         errorPosition: 'below'
-        successMessage: 'Success message received'
+        successMessage: 'Submitted Successfully'
 
     # all components
     @components = {}
