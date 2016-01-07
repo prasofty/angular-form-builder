@@ -13,9 +13,18 @@ angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'colo
     textbox = $builder.addFormObject 'default',
         id: 'textbox'
         component: 'textInput'
-        label: 'Name'
-        description: 'Your name'
-        placeholder: 'Your name'
+        label: 'First Name'
+        description: 'First Name'
+        placeholder: 'First Name'
+        required: yes
+        editable: yes
+
+    textbox = $builder.addFormObject 'default',
+        id: 'textbox'
+        component: 'textInput'
+        label: 'Last Name'
+        description: 'Last Name'
+        placeholder: 'Last Name'
         required: no
         editable: yes
 

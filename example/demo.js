@@ -6,9 +6,18 @@
       textbox = $builder.addFormObject('default', {
         id: 'textbox',
         component: 'textInput',
-        label: 'Name',
-        description: 'Your name',
-        placeholder: 'Your name',
+        label: 'First Name',
+        description: 'First Name',
+        placeholder: 'First Name',
+        required: true,
+        editable: true
+      });
+      textbox = $builder.addFormObject('default', {
+        id: 'textbox',
+        component: 'textInput',
+        label: 'Last Name',
+        description: 'Last Name',
+        placeholder: 'Last Name',
         required: false,
         editable: true
       });

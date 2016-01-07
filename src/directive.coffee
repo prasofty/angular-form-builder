@@ -32,6 +32,11 @@ angular.module 'builder.directive', [
                 .fb-builder .panel .panel-body {
                     min-height: 300px;
                 }
+                .fb-builder .form-group {
+                    background-color: {{config.fieldBackgroundColor}};
+                    padding: 10px;
+                    margin-bottom: 0;
+                }
                 .fb-builder .form-group label.fb-optional {
                     color: {{config.optionalLabelColor}};
                 }
@@ -79,12 +84,12 @@ angular.module 'builder.directive', [
                           </select>
                         </div>
                         <div class="form-group">
-                          <label class='control-label'>formBackgroundColor</label>
+                          <label class='control-label'>Form Background Color</label>
                           <color-picker ng-model="config.formBackgroundColor" color-picker-format="rgba"></color-picker>
                         </div>
-                        <hr/>
-                        <div class='form-group'>
-                          <input type='button' ng-click="formSettingsSave($event)" class='btn btn-primary' value='Save'/>
+                        <div class="form-group">
+                          <label class='control-label'>Field Background Color</label>
+                          <color-picker ng-model="config.fieldBackgroundColor" color-picker-format="rgba"></color-picker>
                         </div>
                     </form>
                 </div>
@@ -418,6 +423,15 @@ angular.module 'builder.directive', [
                 .fb-form {
                     background-color: {{config.formBackgroundColor}};
                     min-height: 300px;
+                    padding: 15px;
+                }
+                .fb-form .form-horizontal .form-group {
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+                .fb-form .form-group {
+                    background-color: {{config.fieldBackgroundColor}};
+                    padding: 10px;
                 }
                 .fb-form .form-group label.fb-optional {
                     color: {{config.optionalLabelColor}};
