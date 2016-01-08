@@ -9,6 +9,7 @@
     <link type="text/css" rel="stylesheet" href="example/site.css"/>
     <link type="text/css" rel="stylesheet" href="dist/angular-form-builder.css"/>
     <link type="text/css" rel="stylesheet" href="node_modules/angularjs-color-picker/angularjs-color-picker.css"/>
+    <link type="text/css" rel="stylesheet" href="node_modules/select2/dist/css/select2.css"/>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//code.angularjs.org/1.4.8/angular.min.js"></script>
@@ -18,6 +19,8 @@
     <script type="text/javascript" src="dist/angular-form-builder-components.js"></script>
     <script type="text/javascript" src="//kelp404.github.io/angular-validator/dist/angular-validator.min.js"></script>
     <script type="text/javascript" src="//kelp404.github.io/angular-validator/dist/angular-validator-rules.min.js"></script>
+    <script type="text/javascript" src="example/typeahead.js"></script>
+    <script type="text/javascript" src="node_modules/select2/dist/js/select2.full.js"></script>
     <script type="text/javascript" src="example/demo.js"></script>
 </head>
 <body class="container" ng-controller="DemoController">
@@ -34,6 +37,12 @@
     <div class="row">
         <div class="col-md-12">
             <pre>{{form}}</pre>
+            <typeahead ng-model="typeHeadValue" empty-message="">
+                <ul>
+                    <li ng-repeat="value in autocompleteValues">{{value}}</li>
+                </ul>
+            </typeahead>
+            {{typeHeadValue}}
         </div>
     </div>
     <hr>

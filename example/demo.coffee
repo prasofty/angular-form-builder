@@ -1,4 +1,4 @@
-angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'color.picker']
+angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'color.picker', 'typeahead']
 
 .run ['$builder', ($builder) ->
 
@@ -19,12 +19,10 @@ angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'colo
         required: yes
         editable: yes
 
-    textbox = $builder.addFormObject 'default',
-        id: 'textbox'
-        component: 'textInput'
-        label: 'Last Name'
-        description: 'Last Name'
-        placeholder: 'Last Name'
+    select2 = $builder.addFormObject 'default',
+        id: 'callToAction'
+        component: 'callToAction'
+        label: 'callToAction'
         required: no
         editable: yes
 
@@ -44,4 +42,3 @@ angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'colo
 ]
 
 $(document).ready ->
-    

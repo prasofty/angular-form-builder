@@ -1,7 +1,7 @@
 (function() {
-  angular.module('app', ['builder', 'builder.components', 'validator.rules', 'color.picker']).run(['$builder', function($builder) {}]).controller('DemoController', [
+  angular.module('app', ['builder', 'builder.components', 'validator.rules', 'color.picker', 'typeahead']).run(['$builder', function($builder) {}]).controller('DemoController', [
     '$scope', '$builder', '$validator', function($scope, $builder, $validator) {
-      var textbox;
+      var select2, textbox;
       $scope.config = $builder.config;
       textbox = $builder.addFormObject('default', {
         id: 'textbox',
@@ -12,12 +12,10 @@
         required: true,
         editable: true
       });
-      textbox = $builder.addFormObject('default', {
-        id: 'textbox',
-        component: 'textInput',
-        label: 'Last Name',
-        description: 'Last Name',
-        placeholder: 'Last Name',
+      select2 = $builder.addFormObject('default', {
+        id: 'callToAction',
+        component: 'callToAction',
+        label: 'callToAction',
         required: false,
         editable: true
       });
