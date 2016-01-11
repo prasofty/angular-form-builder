@@ -60,6 +60,7 @@ angular.module 'builder.provider', []
             required: component.required ? no
             validation: component.validation ? '/.*/'
             validationOptions: component.validationOptions ? []
+            extraConfigs: component.extraConfigs ? []
             options: component.options ? []
             plugin: component.plugin ? ''
             arrayToText: component.arrayToText ? no
@@ -86,7 +87,6 @@ angular.module 'builder.provider', []
             description: formObject.description ? component.description
             placeholder: formObject.placeholder ? component.placeholder
             options: formObject.options ? component.options
-            plugin: formObject.plugin ? component.plugin
             required: formObject.required ? component.required
             validation: formObject.validation ? component.validation
             fieldName: formObject.fieldName ? component.fieldName
