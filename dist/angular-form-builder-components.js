@@ -108,12 +108,33 @@
         description: 'description',
         placeholder: 'none',
         required: false,
+        extraConfigs: {
+          titleTextColor: '#8a6d3b',
+          titleBackgroundColor: '#fcf8e3',
+          bodyTextColor: '#000000',
+          bodyBackgroundColor: '#FFFFFF',
+          classNameOptions: [
+            {
+              label: 'Warning',
+              value: 'fa-warning'
+            }, {
+              label: 'Check',
+              value: 'fa-check'
+            }, {
+              label: 'Check Square',
+              value: 'fa-check-square-o'
+            }, {
+              label: 'Circle',
+              value: 'fa-circle-o'
+            }
+          ]
+        },
         design: {
           currentLabel: 'fa-warning'
         },
         thumbnail: "<div class=\"form-builder-element\">\n    <i class=\"select-icon\">Call to Action</i>\n    <div class=\"form-builder-element-title\">\n     <h6>Call to Action</h6>\n    </div>\n</div>",
-        template: "<div class=\"panel panel-warning\">\n    <div for=\"{{formName+index}}\" class=\"panel-heading\" ng-style=\"{color:extraConfigs.textColor}\">\n        <h3 class=\"panel-title\">\n            <i class=\"fa {{design.currentLabel}}\"></i>\n            {{extraConfigs}}\n        </h3>\n    </div>\n    <div class=\"panel-body\">\n        {{description}}\n    </div>\n</div>",
-        popoverTemplate: "<form>\n    <div class=\"form-group\">\n        <label class='control-label'>Title</label>\n        <input type='text' ng-model=\"label\" validator=\"[required]\" class='form-control'/>\n    </div>\n    <div class=\"form-group\">\n        <label class='control-label'>Description</label>\n        <input type='text' ng-model=\"description\" class='form-control'/>\n    </div>\n    <div class=\"form-group\">\n        <label class='control-label'>Title Text Color</label>\n        <color-picker color-picker-format=\"'hex'\" color-picker-pos=\"'bottom left'\" color-picker-swatch-pos=\"'left'\" ng-model=\"extraConfigs.textColor\"></color-picker>\n    </div>\n    <div class=\"form-group\">\n        <label class='control-label'>Title Background Color</label>\n        <color-picker color-picker-format=\"'hex'\" color-picker-pos=\"'bottom left'\" color-picker-swatch-pos=\"'left'\" ng-model=\"extraConfigs.backgroundColor\"></color-picker>\n    </div>\n    <div class=\"form-group\">\n        <label class='control-label'>Icon Class Name</label>\n        <select class=\"form-control\" ng-model=\"design.currentLabel\">\n          <option ng-repeat=\"option in extraConfigs.classNameOptions\" value=\"{{option.value}}\">{{option.label}}</option>\n        </select>\n    </div>\n    <hr/>\n    <div class='form-group'>\n        <input type='submit' ng-click=\"popover.save($event)\" class='btn btn-primary' value='Save'/>\n        <input type='button' ng-click=\"popover.cancel($event)\" class='btn btn-default' value='Cancel'/>\n        <input type='button' ng-click=\"popover.remove($event)\" class='btn btn-danger' value='Delete'/>\n    </div>\n</form>"
+        template: "<div class=\"panel\">\n    <div for=\"{{formName+index}}\" class=\"panel-heading\" ng-style=\"{'background-color': extraConfigs.titleBackgroundColor}\">\n        <h3 class=\"panel-title\" ng-style=\"{'color':extraConfigs.titleTextColor}\">\n            <i class=\"fa {{design.currentLabel}}\"></i>\n            {{label}}\n        </h3>\n    </div>\n    <div class=\"panel-body\" ng-style=\"{'color':extraConfigs.bodyTextColor, 'background-color': extraConfigs.bodyBackgroundColor}\">\n        {{description}}\n    </div>\n</div>",
+        popoverTemplate: "<form>\n    <div class=\"form-group\">\n        <label class='control-label'>Title</label>\n        <input type='text' ng-model=\"label\" validator=\"[required]\" class='form-control'/>\n    </div>\n    <div class=\"form-group\">\n        <label class='control-label'>Description</label>\n        <input type='text' ng-model=\"description\" class='form-control'/>\n    </div>\n    <div class=\"form-group\">\n        <label class='control-label'>Title Text Color</label>\n        <color-picker color-picker-format=\"'hex'\" color-picker-pos=\"'bottom left'\" color-picker-swatch-pos=\"'left'\" ng-model=\"extraConfigs.titleTextColor\"></color-picker>\n    </div>\n    <div class=\"form-group\">\n        <label class='control-label'>Title Background Color</label>\n        <color-picker color-picker-format=\"'hex'\" color-picker-pos=\"'bottom left'\" color-picker-swatch-pos=\"'left'\" ng-model=\"extraConfigs.titleBackgroundColor\"></color-picker>\n    </div>\n    <div class=\"form-group\">\n        <label class='control-label'>Body Text Color</label>\n        <color-picker color-picker-format=\"'hex'\" color-picker-pos=\"'bottom left'\" color-picker-swatch-pos=\"'left'\" ng-model=\"extraConfigs.bodyTextColor\"></color-picker>\n    </div>\n    <div class=\"form-group\">\n        <label class='control-label'>Body Background Color</label>\n        <color-picker color-picker-format=\"'hex'\" color-picker-pos=\"'bottom left'\" color-picker-swatch-pos=\"'left'\" ng-model=\"extraConfigs.bodyBackgroundColor\"></color-picker>\n    </div>\n    <div class=\"form-group\">\n        <label class='control-label'>Icon Class Name</label>\n        <select class=\"form-control\" ng-model=\"design.currentLabel\">\n          <option ng-repeat=\"option in extraConfigs.classNameOptions\" value=\"{{option.value}}\">{{option.label}}</option>\n        </select>\n    </div>\n    <hr/>\n    <div class='form-group'>\n        <input type='submit' ng-click=\"popover.save($event)\" class='btn btn-primary' value='Save'/>\n        <input type='button' ng-click=\"popover.cancel($event)\" class='btn btn-default' value='Cancel'/>\n        <input type='button' ng-click=\"popover.remove($event)\" class='btn btn-danger' value='Delete'/>\n    </div>\n</form>"
       });
     }
   ]);

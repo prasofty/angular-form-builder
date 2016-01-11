@@ -1,5 +1,5 @@
 (function() {
-  angular.module('app', ['builder', 'builder.components', 'validator.rules', 'color.picker', 'typeahead']).run(['$builder', function($builder) {}]).controller('DemoController', [
+  angular.module('app', ['builder', 'builder.components', 'validator.rules', 'color.picker']).run(['$builder', function($builder) {}]).controller('DemoController', [
     '$scope', '$builder', '$validator', function($scope, $builder, $validator) {
       var select2, textbox;
       $scope.config = $builder.config;

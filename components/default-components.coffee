@@ -500,6 +500,29 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         description: 'description'
         placeholder: 'none'
         required: false
+        extraConfigs:
+            titleTextColor: '#8a6d3b'
+            titleBackgroundColor: '#fcf8e3'
+            bodyTextColor: '#000000'
+            bodyBackgroundColor: '#FFFFFF'
+            classNameOptions: [
+                {
+                    label: 'Warning'
+                    value: 'fa-warning'
+                }
+                {
+                    label: 'Check'
+                    value: 'fa-check'
+                }
+                {
+                    label: 'Check Square'
+                    value: 'fa-check-square-o'
+                }
+                {
+                    label: 'Circle'
+                    value: 'fa-circle-o'
+                }
+            ]
         design:
             currentLabel: 'fa-warning'
         thumbnail:
@@ -513,14 +536,14 @@ angular.module 'builder.components', ['builder', 'validator.rules']
             """
         template:
             """
-                <div class="panel panel-warning">
-                    <div for="{{formName+index}}" class="panel-heading" ng-style="{color:extraConfigs.textColor}">
-                        <h3 class="panel-title">
+                <div class="panel">
+                    <div for="{{formName+index}}" class="panel-heading" ng-style="{'background-color': extraConfigs.titleBackgroundColor}">
+                        <h3 class="panel-title" ng-style="{'color':extraConfigs.titleTextColor}">
                             <i class="fa {{design.currentLabel}}"></i>
-                            {{extraConfigs}}
+                            {{label}}
                         </h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" ng-style="{'color':extraConfigs.bodyTextColor, 'background-color': extraConfigs.bodyBackgroundColor}">
                         {{description}}
                     </div>
                 </div>
@@ -538,11 +561,19 @@ angular.module 'builder.components', ['builder', 'validator.rules']
                 </div>
                 <div class="form-group">
                     <label class='control-label'>Title Text Color</label>
-                    <color-picker color-picker-format="'hex'" color-picker-pos="'bottom left'" color-picker-swatch-pos="'left'" ng-model="extraConfigs.textColor"></color-picker>
+                    <color-picker color-picker-format="'hex'" color-picker-pos="'bottom left'" color-picker-swatch-pos="'left'" ng-model="extraConfigs.titleTextColor"></color-picker>
                 </div>
                 <div class="form-group">
                     <label class='control-label'>Title Background Color</label>
-                    <color-picker color-picker-format="'hex'" color-picker-pos="'bottom left'" color-picker-swatch-pos="'left'" ng-model="extraConfigs.backgroundColor"></color-picker>
+                    <color-picker color-picker-format="'hex'" color-picker-pos="'bottom left'" color-picker-swatch-pos="'left'" ng-model="extraConfigs.titleBackgroundColor"></color-picker>
+                </div>
+                <div class="form-group">
+                    <label class='control-label'>Body Text Color</label>
+                    <color-picker color-picker-format="'hex'" color-picker-pos="'bottom left'" color-picker-swatch-pos="'left'" ng-model="extraConfigs.bodyTextColor"></color-picker>
+                </div>
+                <div class="form-group">
+                    <label class='control-label'>Body Background Color</label>
+                    <color-picker color-picker-format="'hex'" color-picker-pos="'bottom left'" color-picker-swatch-pos="'left'" ng-model="extraConfigs.bodyBackgroundColor"></color-picker>
                 </div>
                 <div class="form-group">
                     <label class='control-label'>Icon Class Name</label>

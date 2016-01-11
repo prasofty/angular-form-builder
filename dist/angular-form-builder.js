@@ -1049,7 +1049,7 @@
       "default": []
     };
     this.convertComponent = function(name, component) {
-      var result, _ref, _ref1, _ref10, _ref11, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      var result, _ref, _ref1, _ref10, _ref11, _ref12, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       result = {
         name: name,
         group: (_ref = component.group) != null ? _ref : 'Default',
@@ -1060,14 +1060,15 @@
         required: (_ref5 = component.required) != null ? _ref5 : false,
         validation: (_ref6 = component.validation) != null ? _ref6 : '/.*/',
         validationOptions: (_ref7 = component.validationOptions) != null ? _ref7 : [],
-        options: (_ref8 = component.options) != null ? _ref8 : [],
-        plugin: (_ref9 = component.plugin) != null ? _ref9 : '',
-        arrayToText: (_ref10 = component.arrayToText) != null ? _ref10 : false,
+        extraConfigs: (_ref8 = component.extraConfigs) != null ? _ref8 : [],
+        options: (_ref9 = component.options) != null ? _ref9 : [],
+        plugin: (_ref10 = component.plugin) != null ? _ref10 : '',
+        arrayToText: (_ref11 = component.arrayToText) != null ? _ref11 : false,
         template: component.template,
         templateUrl: component.templateUrl,
         popoverTemplate: component.popoverTemplate,
         popoverTemplateUrl: component.popoverTemplateUrl,
-        thumbnail: (_ref11 = component.thumbnail) != null ? _ref11 : ''
+        thumbnail: (_ref12 = component.thumbnail) != null ? _ref12 : ''
       };
       if (!result.template && !result.templateUrl) {
         console.error("The template is empty.");
@@ -1078,7 +1079,7 @@
       return result;
     };
     this.convertFormObject = function(name, formObject) {
-      var component, result, _ref, _ref1, _ref10, _ref11, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      var component, result, _ref, _ref1, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       if (formObject == null) {
         formObject = {};
       }
@@ -1095,12 +1096,11 @@
         description: (_ref3 = formObject.description) != null ? _ref3 : component.description,
         placeholder: (_ref4 = formObject.placeholder) != null ? _ref4 : component.placeholder,
         options: (_ref5 = formObject.options) != null ? _ref5 : component.options,
-        plugin: (_ref6 = formObject.plugin) != null ? _ref6 : component.plugin,
-        required: (_ref7 = formObject.required) != null ? _ref7 : component.required,
-        validation: (_ref8 = formObject.validation) != null ? _ref8 : component.validation,
-        fieldName: (_ref9 = formObject.fieldName) != null ? _ref9 : component.fieldName,
-        design: (_ref10 = formObject.design) != null ? _ref10 : component.design,
-        extraConfigs: (_ref11 = formObject.extraConfigs) != null ? _ref11 : component.extraConfigs
+        required: (_ref6 = formObject.required) != null ? _ref6 : component.required,
+        validation: (_ref7 = formObject.validation) != null ? _ref7 : component.validation,
+        fieldName: (_ref8 = formObject.fieldName) != null ? _ref8 : component.fieldName,
+        design: (_ref9 = formObject.design) != null ? _ref9 : component.design,
+        extraConfigs: (_ref10 = formObject.extraConfigs) != null ? _ref10 : component.extraConfigs
       };
       return result;
     };
