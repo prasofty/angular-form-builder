@@ -322,7 +322,6 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         placeholder: 'placeholder'
         required: no
         options: ['value one', 'value two']
-        plugin: 'select2'
         thumbnail:
             """
                 <div class="form-builder-element">
@@ -338,7 +337,7 @@ angular.module 'builder.components', ['builder', 'validator.rules']
                 <label for="{{formName+index}}" control-label" ng-class="{'fb-required':required, 'fb-optional':required == 0, 'col-sm-3': config.labelPosition == 'left'}">{{label}}</label>
                 <div ng-class="{'col-sm-9': config.labelPosition == 'left'}">
                         <select ng-options="value for value in options" id="{{formName+index}}" class="form-control"
-                            ng-model="inputText" ng-init="inputText = options[0]" data-plugin="{{plugin}}"/>
+                            ng-model="inputText" ng-init="inputText = options[0]" data-plugin="select2"/>
                         <p class='help-block'>{{description}}</p>
                 </div>
             </div>

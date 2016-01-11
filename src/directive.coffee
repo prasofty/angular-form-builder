@@ -66,7 +66,7 @@ angular.module 'builder.directive', [
                         </div>
                         <div class="form-group">
                           <label class='control-label'>Required Label Color</label>
-                          <color-picker ng-model="config.requiredLabelColor" color-picker-format="rgba"></color-picker>
+                          <color-picker ng-model="config.requiredLabelColor" color-picker-format="'hex'" color-picker-pos="'bottom left'" color-picker-swatch-pos="'left'"></color-picker>
                         </div>
                         <div class="form-group">
                           <label class='control-label'>Optional Indicator</label>
@@ -74,7 +74,7 @@ angular.module 'builder.directive', [
                         </div>
                         <div class="form-group">
                           <label class='control-label'>Optional Label Color</label>
-                          <color-picker ng-model="config.optionalLabelColor" color-picker-format="rgba"></color-picker>
+                          <color-picker ng-model="config.optionalLabelColor" color-picker-format="'hex'" color-picker-pos="'bottom left'" color-picker-swatch-pos="'left'"></color-picker>
                         </div>
                         <div class="form-group">
                           <label class='control-label'>Label Position</label>
@@ -85,11 +85,11 @@ angular.module 'builder.directive', [
                         </div>
                         <div class="form-group">
                           <label class='control-label'>Form Background Color</label>
-                          <color-picker ng-model="config.formBackgroundColor" color-picker-format="rgba"></color-picker>
+                          <color-picker ng-model="config.formBackgroundColor" color-picker-format="'hex'" color-picker-pos="'bottom left'" color-picker-swatch-pos="'left'"></color-picker>
                         </div>
                         <div class="form-group">
                           <label class='control-label'>Field Background Color</label>
-                          <color-picker ng-model="config.fieldBackgroundColor" color-picker-format="rgba"></color-picker>
+                          <color-picker ng-model="config.fieldBackgroundColor" color-picker-format="'hex'" color-picker-pos="'bottom left'" color-picker-swatch-pos="'left'"></color-picker>
                         </div>
                         <div class="form-group">
                           <label class='control-label'>Success Message</label>
@@ -535,6 +535,8 @@ angular.module 'builder.directive', [
             # compile
             view = $compile($template) scope
             $(element).html view
+            if $input.data('plugin') and $.fn.select2
+                $input.select2()
 
         # select the first option
         if not scope.$component.arrayToText and scope.formObject.options.length > 0
