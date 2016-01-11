@@ -22,6 +22,7 @@ angular.module 'builder.directive', [
     restrict: 'A'
     scope:
         fbBuilder: '='
+        fbSettings: '='
     template:
         """
         <div class="panel panel-default">
@@ -56,7 +57,7 @@ angular.module 'builder.directive', [
             <div class="panel-heading">
                 <h3 class="panel-title">
                     Form Builder
-                    <span class="pull-right"><a class="form-settings"><i class="fa fa-cog"></i></a></span>
+                    <span class="pull-right"><a class="form-settings" ng-hide="!{{fbSettings}}"><i class="fa fa-cog"></i></a></span>
                 </h3>
                 <div class="form-settings-popover hide">
                     <form class="config-popover">
