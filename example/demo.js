@@ -9,6 +9,7 @@
         label: 'First Name',
         description: 'First Name',
         placeholder: 'First Name',
+        tooltip: 'First Name',
         required: true,
         editable: true
       });
@@ -47,6 +48,7 @@
   ]);
 
   $(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
     $(".datepicker").datepicker({
       changeMonth: true,
       changeYear: true

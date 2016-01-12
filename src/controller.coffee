@@ -34,11 +34,12 @@ angular.module 'builder.controller', ['builder.provider']
 
         $scope.optionsText = formObject.options.join '\n'
 
-        $scope.$watch '[fieldName, label, description, placeholder, required, options, validation, design, extraConfigs]', ->
+        $scope.$watch '[fieldName, label, description, placeholder, required, options, validation, design, extraConfigs, tooltip]', ->
             formObject.fieldName = $scope.fieldName;
             formObject.label = $scope.label;
             formObject.description = $scope.description;
             formObject.placeholder = $scope.placeholder;
+            formObject.tooltip = $scope.tooltip;
             formObject.required = $scope.required;
             formObject.options = $scope.options;
             formObject.validation = $scope.validation;

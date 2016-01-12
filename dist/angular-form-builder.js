@@ -31,11 +31,12 @@
         var component;
         copyObjectToScope(formObject, $scope);
         $scope.optionsText = formObject.options.join('\n');
-        $scope.$watch('[fieldName, label, description, placeholder, required, options, validation, design, extraConfigs]', function() {
+        $scope.$watch('[fieldName, label, description, placeholder, required, options, validation, design, extraConfigs, tooltip]', function() {
           formObject.fieldName = $scope.fieldName;
           formObject.label = $scope.label;
           formObject.description = $scope.description;
           formObject.placeholder = $scope.placeholder;
+          formObject.tooltip = $scope.tooltip;
           formObject.required = $scope.required;
           formObject.options = $scope.options;
           formObject.validation = $scope.validation;
@@ -571,7 +572,10 @@
             view = $compile($template)(scope);
             $(element).html(view);
             if ($input.data('plugin') && $.fn.select2) {
-              return $input.select2();
+              $input.select2();
+            }
+            if ($.fn.tooltip()) {
+              return $('[data-toggle="tooltip"]').tooltip();
             }
           });
           if (!scope.$component.arrayToText && scope.formObject.options.length > 0) {
@@ -1059,13 +1063,13 @@
         label: (_ref1 = component.label) != null ? _ref1 : '',
         description: (_ref2 = component.description) != null ? _ref2 : '',
         placeholder: (_ref3 = component.placeholder) != null ? _ref3 : '',
-        editable: (_ref4 = component.editable) != null ? _ref4 : true,
-        required: (_ref5 = component.required) != null ? _ref5 : false,
-        validation: (_ref6 = component.validation) != null ? _ref6 : '/.*/',
-        validationOptions: (_ref7 = component.validationOptions) != null ? _ref7 : [],
-        extraConfigs: (_ref8 = component.extraConfigs) != null ? _ref8 : [],
-        options: (_ref9 = component.options) != null ? _ref9 : [],
-        plugin: (_ref10 = component.plugin) != null ? _ref10 : '',
+        tooltip: (_ref4 = component.tooltip) != null ? _ref4 : '',
+        editable: (_ref5 = component.editable) != null ? _ref5 : true,
+        required: (_ref6 = component.required) != null ? _ref6 : false,
+        validation: (_ref7 = component.validation) != null ? _ref7 : '/.*/',
+        validationOptions: (_ref8 = component.validationOptions) != null ? _ref8 : [],
+        extraConfigs: (_ref9 = component.extraConfigs) != null ? _ref9 : [],
+        options: (_ref10 = component.options) != null ? _ref10 : [],
         arrayToText: (_ref11 = component.arrayToText) != null ? _ref11 : false,
         template: component.template,
         templateUrl: component.templateUrl,
@@ -1082,7 +1086,7 @@
       return result;
     };
     this.convertFormObject = function(name, formObject) {
-      var component, result, _ref, _ref1, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      var component, result, _ref, _ref1, _ref10, _ref11, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       if (formObject == null) {
         formObject = {};
       }
@@ -1098,12 +1102,13 @@
         label: (_ref2 = formObject.label) != null ? _ref2 : component.label,
         description: (_ref3 = formObject.description) != null ? _ref3 : component.description,
         placeholder: (_ref4 = formObject.placeholder) != null ? _ref4 : component.placeholder,
-        options: (_ref5 = formObject.options) != null ? _ref5 : component.options,
-        required: (_ref6 = formObject.required) != null ? _ref6 : component.required,
-        validation: (_ref7 = formObject.validation) != null ? _ref7 : component.validation,
-        fieldName: (_ref8 = formObject.fieldName) != null ? _ref8 : component.fieldName,
-        design: (_ref9 = formObject.design) != null ? _ref9 : component.design,
-        extraConfigs: (_ref10 = formObject.extraConfigs) != null ? _ref10 : component.extraConfigs
+        tooltip: (_ref5 = formObject.tooltip) != null ? _ref5 : component.tooltip,
+        options: (_ref6 = formObject.options) != null ? _ref6 : component.options,
+        required: (_ref7 = formObject.required) != null ? _ref7 : component.required,
+        validation: (_ref8 = formObject.validation) != null ? _ref8 : component.validation,
+        fieldName: (_ref9 = formObject.fieldName) != null ? _ref9 : component.fieldName,
+        design: (_ref10 = formObject.design) != null ? _ref10 : component.design,
+        extraConfigs: (_ref11 = formObject.extraConfigs) != null ? _ref11 : component.extraConfigs
       };
       return result;
     };

@@ -16,6 +16,7 @@ angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'colo
         label: 'First Name'
         description: 'First Name'
         placeholder: 'First Name'
+        tooltip: 'First Name'
         required: yes
         editable: yes
 
@@ -55,6 +56,7 @@ angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'colo
 ]
 
 $(document).ready ->
+    $('[data-toggle="tooltip"]').tooltip()
     $(".datepicker").datepicker({
         changeMonth: true,
         changeYear: true

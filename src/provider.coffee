@@ -56,13 +56,13 @@ angular.module 'builder.provider', []
             label: component.label ? ''
             description: component.description ? ''
             placeholder: component.placeholder ? ''
+            tooltip: component.tooltip ? ''
             editable: component.editable ? yes
             required: component.required ? no
             validation: component.validation ? '/.*/'
             validationOptions: component.validationOptions ? []
             extraConfigs: component.extraConfigs ? []
             options: component.options ? []
-            plugin: component.plugin ? ''
             arrayToText: component.arrayToText ? no
             template: component.template
             templateUrl: component.templateUrl
@@ -86,6 +86,7 @@ angular.module 'builder.provider', []
             label: formObject.label ? component.label
             description: formObject.description ? component.description
             placeholder: formObject.placeholder ? component.placeholder
+            tooltip: formObject.tooltip ? component.tooltip
             options: formObject.options ? component.options
             required: formObject.required ? component.required
             validation: formObject.validation ? component.validation

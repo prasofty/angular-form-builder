@@ -13,8 +13,13 @@
     <link type="text/css" rel="stylesheet" href="node_modules/angularjs-color-picker/angularjs-color-picker.css"/>
     <link type="text/css" rel="stylesheet" href="node_modules/select2/dist/css/select2.css"/>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+        /*** Handle jQuery plugin naming conflict between jQuery UI and Bootstrap ***/
+        $.widget.bridge('uibutton', $.ui.button);
+        $.widget.bridge('uitooltip', $.ui.tooltip);
+    </script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//code.angularjs.org/1.4.8/angular.min.js"></script>
     <script type="text/javascript" src="node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
     <script type="text/javascript" src="node_modules/tinycolor2/dist/tinycolor-min.js"></script>

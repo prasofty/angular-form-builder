@@ -540,6 +540,8 @@ angular.module 'builder.directive', [
             $(element).html view
             if $input.data('plugin') and $.fn.select2
                 $input.select2()
+            if $.fn.tooltip()
+                $('[data-toggle="tooltip"]').tooltip()
 
         # select the first option
         if not scope.$component.arrayToText and scope.formObject.options.length > 0

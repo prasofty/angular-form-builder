@@ -9,6 +9,7 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         label: 'Text Input'
         description: 'description'
         placeholder: 'placeholder'
+        tooltip: 'tooltip'
         required: no
         validationOptions: [
             {label: 'none', rule: '/.*/'}
@@ -28,7 +29,7 @@ angular.module 'builder.components', ['builder', 'validator.rules']
         template:
             """
             <div class="form-group">
-                <label for="{{formName+index}}" class="control-label" ng-class="{'fb-required':required, 'fb-optional':required == 0, 'col-sm-3': config.labelPosition == 'left'}">{{label}}</label>
+                <label for="{{formName+index}}" class="control-label" ng-class="{'fb-required':required, 'fb-optional':required == 0, 'col-sm-3': config.labelPosition == 'left'}" data-toggle="tooltip" data-placement="top" data-original-title="{{tooltip}}">{{label}}</label>
                 <div ng-class="{'col-sm-9': config.labelPosition == 'left'}">
                     <input type="text" ng-model="inputText" validator-required="{{required}}" validator-group="{{formName}}" id="{{formName+index}}" class="form-control" placeholder="{{placeholder}}"/>
                     <p class='help-block'>{{description}}</p>
@@ -53,6 +54,10 @@ angular.module 'builder.components', ['builder', 'validator.rules']
                 <div class="form-group">
                     <label class='control-label'>Placeholder</label>
                     <input type='text' ng-model="placeholder" class='form-control'/>
+                </div>
+                <div class="form-group">
+                    <label class='control-label'>Tooltip</label>
+                    <input type='text' ng-model="tooltip" class='form-control'/>
                 </div>
                 <div class="checkbox">
                     <label>
