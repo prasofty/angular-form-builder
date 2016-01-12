@@ -430,6 +430,7 @@ angular.module 'builder.directive', [
         formName: '@fbForm'
         input: '=ngModel'
         default: '=fbDefault'
+        showSuccessMessage: '=fbShowSuccessMessage'
     template:
         """
         <div class="fb-form">
@@ -463,7 +464,7 @@ angular.module 'builder.directive', [
                     content: ' {{config.requiredIndicator}}';
                 }
             </style>
-            <div class="success-message">
+            <div class="success-message" ng-show="showSuccessMessage">
                 <div class="alert alert-success">
                     {{config.successMessage}}
                 </div>
@@ -479,6 +480,7 @@ angular.module 'builder.directive', [
         $builder = $injector.get '$builder'
 
         # get the form for controller
+        console.log(scope.showSuccessMessage)
         $builder.forms[scope.formName] ?= []
         scope.form = $builder.forms[scope.formName]
         scope.config = $builder.config

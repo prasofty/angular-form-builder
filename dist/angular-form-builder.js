@@ -504,13 +504,15 @@
         scope: {
           formName: '@fbForm',
           input: '=ngModel',
-          "default": '=fbDefault'
+          "default": '=fbDefault',
+          showSuccessMessage: '=fbShowSuccessMessage'
         },
-        template: "<div class=\"fb-form\">\n    <style type='text/css'>\n        .fb-form {\n            background-color: {{config.formBackgroundColor}};\n            min-height: 300px;\n            padding: 15px;\n        }\n        .fb-builder .success-message {\n            padding: 0 10px;\n        }\n        .fb-form .form-horizontal .form-group {\n            margin-left: 0;\n            margin-right: 0;\n        }\n        .fb-form .form-group {\n            background-color: {{config.fieldBackgroundColor}};\n            padding: 10px;\n        }\n        .fb-form .form-group label.fb-optional {\n            color: {{config.optionalLabelColor}};\n        }\n        .fb-form .form-group label.fb-optional:after {\n            content: ' {{config.optionalIndicator}}';\n        }\n        .fb-form .form-group label.fb-required {\n            color: {{config.requiredLabelColor}};\n        }\n        .fb-form .form-group label.fb-required:after {\n            content: ' {{config.requiredIndicator}}';\n        }\n    </style>\n    <div class=\"success-message\">\n        <div class=\"alert alert-success\">\n            {{config.successMessage}}\n        </div>\n    </div>\n    <div ng-class=\"{'form-horizontal': config.labelPosition == 'left'}\">\n        <div class='fb-form-object' ng-repeat=\"object in form\" fb-form-object=\"object\"></div>\n    </div>\n</div>",
+        template: "<div class=\"fb-form\">\n    <style type='text/css'>\n        .fb-form {\n            background-color: {{config.formBackgroundColor}};\n            min-height: 300px;\n            padding: 15px;\n        }\n        .fb-builder .success-message {\n            padding: 0 10px;\n        }\n        .fb-form .form-horizontal .form-group {\n            margin-left: 0;\n            margin-right: 0;\n        }\n        .fb-form .form-group {\n            background-color: {{config.fieldBackgroundColor}};\n            padding: 10px;\n        }\n        .fb-form .form-group label.fb-optional {\n            color: {{config.optionalLabelColor}};\n        }\n        .fb-form .form-group label.fb-optional:after {\n            content: ' {{config.optionalIndicator}}';\n        }\n        .fb-form .form-group label.fb-required {\n            color: {{config.requiredLabelColor}};\n        }\n        .fb-form .form-group label.fb-required:after {\n            content: ' {{config.requiredIndicator}}';\n        }\n    </style>\n    <div class=\"success-message\" ng-show=\"showSuccessMessage\">\n        <div class=\"alert alert-success\">\n            {{config.successMessage}}\n        </div>\n    </div>\n    <div ng-class=\"{'form-horizontal': config.labelPosition == 'left'}\">\n        <div class='fb-form-object' ng-repeat=\"object in form\" fb-form-object=\"object\"></div>\n    </div>\n</div>",
         controller: 'fbFormController',
         link: function(scope, element, attrs) {
           var $builder, _base, _name;
           $builder = $injector.get('$builder');
+          console.log(scope.showSuccessMessage);
           if ((_base = $builder.forms)[_name = scope.formName] == null) {
             _base[_name] = [];
           }
