@@ -380,9 +380,11 @@ angular.module 'builder.directive', [
                 <a href='#' ng-click="selectGroup($event, group)">{{group}}</a>
             </li>
         </ul>
-        <div class='form-horizontal'>
-            <div class='fb-component' ng-repeat="component in components"
-                fb-component="component"></div>
+        <div class='fb-components' ng-class="{'form-horizontal': config.labelPosition == 'left'}">
+            <ul>
+                <li class='fb-component' ng-repeat="component in components"
+                    fb-component="component"></li>
+            </ul>
         </div>
         """
     controller: 'fbComponentsController'
@@ -480,7 +482,6 @@ angular.module 'builder.directive', [
         $builder = $injector.get '$builder'
 
         # get the form for controller
-        console.log(scope.showSuccessMessage)
         $builder.forms[scope.formName] ?= []
         scope.form = $builder.forms[scope.formName]
         scope.config = $builder.config

@@ -458,7 +458,7 @@
   ]).directive('fbComponents', function() {
     return {
       restrict: 'A',
-      template: "<ul ng-if=\"groups.length > 1\" class=\"nav nav-tabs nav-justified\">\n    <li ng-repeat=\"group in groups\" ng-class=\"{active:activeGroup==group}\">\n        <a href='#' ng-click=\"selectGroup($event, group)\">{{group}}</a>\n    </li>\n</ul>\n<div class='form-horizontal'>\n    <div class='fb-component' ng-repeat=\"component in components\"\n        fb-component=\"component\"></div>\n</div>",
+      template: "<ul ng-if=\"groups.length > 1\" class=\"nav nav-tabs nav-justified\">\n    <li ng-repeat=\"group in groups\" ng-class=\"{active:activeGroup==group}\">\n        <a href='#' ng-click=\"selectGroup($event, group)\">{{group}}</a>\n    </li>\n</ul>\n<div class='fb-components' ng-class=\"{'form-horizontal': config.labelPosition == 'left'}\">\n    <ul>\n        <li class='fb-component' ng-repeat=\"component in components\"\n            fb-component=\"component\"></li>\n    </ul>\n</div>",
       controller: 'fbComponentsController'
     };
   }).directive('fbComponent', [
@@ -513,7 +513,6 @@
         link: function(scope, element, attrs) {
           var $builder, _base, _name;
           $builder = $injector.get('$builder');
-          console.log(scope.showSuccessMessage);
           if ((_base = $builder.forms)[_name = scope.formName] == null) {
             _base[_name] = [];
           }
@@ -1037,12 +1036,12 @@
     this.config = {
       popoverPlacement: 'right',
       requiredIndicator: '*',
-      requiredLabelColor: 'hsl(0, 73%, 53%)',
+      requiredLabelColor: '#ff0000',
       optionalIndicator: '#',
       optionalLabelColor: '#000000',
       labelPosition: 'above',
-      fieldBackgroundColor: 'hsla(163, 55%, 90%, 0.63)',
-      formBackgroundColor: 'hsla(216, 68%, 46%, 0.49)',
+      fieldBackgroundColor: '#f6f6f6',
+      formBackgroundColor: '#ffffff',
       errorColor: '#ff0000',
       errorPosition: 'below',
       successMessage: 'Submitted Successfully'
