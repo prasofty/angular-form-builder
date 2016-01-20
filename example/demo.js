@@ -22,7 +22,9 @@
       });
       $scope.form = $builder.forms['default'];
       $scope.input = [];
-      $scope.defaultValue = {};
+      $scope.defaultValue = {
+        textbox: 'kumarb'
+      };
       $scope.submit = function() {
         return $validator.validate($scope, 'default').success(function() {
           return console.log('success');

@@ -35,7 +35,7 @@ angular.module 'app', ['builder', 'builder.components', 'validator.rules', 'colo
     # ----------------------------------------
     # user input value
     $scope.input = []
-    $scope.defaultValue = {}
+    $scope.defaultValue = {textbox: 'kumarb'}
     $scope.submit = ->
         $validator.validate $scope, 'default'
         .success -> console.log 'success'

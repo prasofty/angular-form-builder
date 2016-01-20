@@ -717,4 +717,70 @@ angular.module 'builder.components', ['builder', 'validator.rules']
                 </div>
             </form>
             """
+    # ----------------------------------------
+    # Color Picker
+    # ----------------------------------------
+    $builderProvider.registerComponent 'colorPicker',
+        group: 'Default'
+        label: 'Color Picker'
+        description: 'description'
+        placeholder: 'placeholder'
+        required: false
+        thumbnail:
+            """
+                <div class="form-builder-element">
+                     <i class="date-time-icon">Date Input</i>
+                    <div class="form-builder-element-title">
+                     <h6>Color Picker</h6>
+                    </div>
+                </div>
+            """
+        template:
+            """
+                <div class="form-group">
+                    <label for="{{formName+index}}" class="control-label" ng-class="{'fb-required':required, 'fb-optional':required == 0, 'col-sm-3': config.labelPosition == 'left'}">{{label}}</label>
+                    <div ng-class="{'col-sm-9': config.labelPosition == 'left'}">
+                        <color-picker color-picker-format="'hex'"
+                                      color-picker-pos="'bottom left'"
+                                      color-picker-swatch-pos="'left'"
+                                      color-picker-alpha="false"
+                                      color-picker-swatch-bootstrap="false"
+                                      ng-model="inputText" validator-required="{{required}}" validator-group="{{formName}}" id="{{formName+index}}" placeholder="{{placeholder}}"></color-picker>
+                        <p class="help-block">{{description}}</p>
+                    </div>
+                </div>
+            """
+        popoverTemplate:
+            """
+                <form>
+                    <div class="form-group">
+                        <label class="control-label">Label</label>
+                        <input type="text" ng-model="label" validator="[required]" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class='control-label'>Field Name</label>
+                        <input type='text' ng-model="fieldName" validator="[required]" class='form-control'/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Description</label>
+                        <input type="text" ng-model="description" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Placeholder</label>
+                        <input type="text" ng-model="placeholder" class="form-control">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="required">
+                            Required
+                        </label>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <input type='submit' ng-click="popover.save($event)" class='btn btn-primary' value='Save'/>
+                        <input type='button' ng-click="popover.cancel($event)" class='btn btn-default' value='Cancel'/>
+                        <input type='button' ng-click="popover.remove($event)" class='btn btn-danger' value='Delete'/>
+                    </div>
+                </form>
+            """
 ]

@@ -101,7 +101,7 @@ angular.module 'builder.directive', [
             </div>
             <div class="panel-body">
                 <div ng-class="{'form-horizontal': config.labelPosition == 'left'}">
-                    <div class="success-message">
+                    <div class="success-message hide">
                         <div class="alert alert-success">
                             {{config.successMessage}}
                         </div>
