@@ -1074,7 +1074,8 @@
         templateUrl: component.templateUrl,
         popoverTemplate: component.popoverTemplate,
         popoverTemplateUrl: component.popoverTemplateUrl,
-        thumbnail: (_ref12 = component.thumbnail) != null ? _ref12 : ''
+        thumbnail: (_ref12 = component.thumbnail) != null ? _ref12 : '',
+        thumbnailUrl: component.thumbnailUrl
       };
       if (!result.template && !result.templateUrl) {
         console.error("The template is empty.");
@@ -1133,6 +1134,13 @@
       Load template for components.
       @param component: {object} The component of $builder.
        */
+      if (component.thumbnail == null) {
+        $http.get(component.thumbnailUrl, {
+          cache: $templateCache
+        }).success(function(template) {
+          return component.thumbnail = template;
+        });
+      }
       if (component.template == null) {
         $http.get(component.templateUrl, {
           cache: $templateCache

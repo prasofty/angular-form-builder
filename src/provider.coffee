@@ -69,6 +69,7 @@ angular.module 'builder.provider', []
             popoverTemplate: component.popoverTemplate
             popoverTemplateUrl: component.popoverTemplateUrl
             thumbnail: component.thumbnail ? ''
+            thumbnailUrl: component.thumbnailUrl
         if not result.template and not result.templateUrl
             console.error "The template is empty."
         if not result.popoverTemplate and not result.popoverTemplateUrl
@@ -111,6 +112,11 @@ angular.module 'builder.provider', []
         Load template for components.
         @param component: {object} The component of $builder.
         ###
+        if not component.thumbnail?
+            $http.get component.thumbnailUrl,
+                cache: $templateCache
+            .success (template) ->
+                component.thumbnail = template
         if not component.template?
             $http.get component.templateUrl,
                 cache: $templateCache

@@ -90,7 +90,7 @@ $inputs: (
     radiobutton  '/dist/images/radio-button-icon.svg'  60% 60px,
     select       '/dist/images/select-input-icon.svg'   	   75% 60px,
     date         '/dist/images/date-icon.svg'   	   80% 65px,
-    date-time    '/dist/images/date-time-icon.svg'     80% 65px,
+    date-time    '/dist/images/date-time-icon.svg'     80% 65px
 );
 
 @each $input in $inputs{
