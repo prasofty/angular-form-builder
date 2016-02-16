@@ -17,25 +17,8 @@ angular.module 'builder.components', ['builder', 'validator.rules']
             {label: 'email', rule: '[email]'}
             {label: 'url', rule: '[url]'}
         ]
-        thumbnail:
-            """
-                <div class="form-builder-element">
-                  <i class="textinput-icon">Text Input</i>
-                  <div class="form-builder-element-title">
-                    <h6>Text Input</h6>
-                  </div>
-                </div>
-            """
-        template:
-            """
-            <div class="form-group">
-                <label for="{{formName+index}}" class="control-label" ng-class="{'fb-required':required, 'fb-optional':required == 0, 'col-sm-3': config.labelPosition == 'left'}" data-toggle="tooltip" data-placement="top" data-original-title="{{tooltip}}">{{label}}</label>
-                <div ng-class="{'col-sm-9': config.labelPosition == 'left'}">
-                    <input type="text" ng-model="inputText" validator-required="{{required}}" validator-group="{{formName}}" id="{{formName+index}}" class="form-control" placeholder="{{placeholder}}"/>
-                    <p class='help-block'>{{description}}</p>
-                </div>
-            </div>
-            """
+        thumbnailUrl: 'example/textInputThumbnail.html'
+        templateUrl: 'example/textInput.html'
         popoverTemplate:
             """
             <form>

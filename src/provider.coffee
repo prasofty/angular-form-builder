@@ -68,8 +68,10 @@ angular.module 'builder.provider', []
             templateUrl: component.templateUrl
             popoverTemplate: component.popoverTemplate
             popoverTemplateUrl: component.popoverTemplateUrl
-            thumbnail: component.thumbnail ? ''
+            thumbnail: component.thumbnail
             thumbnailUrl: component.thumbnailUrl
+        if not result.thumbnail and not result.thumbnailUrl
+            console.error "The thumbnail is empty"
         if not result.template and not result.templateUrl
             console.error "The template is empty."
         if not result.popoverTemplate and not result.popoverTemplateUrl

@@ -482,8 +482,15 @@
               componentName: scope.component.name
             }
           });
-          if (scope.component.thumbnail) {
-            return $(element).html(scope.component.thumbnail);
+          if (scope.component.thumbnail || scope.component.thumbnailUrl) {
+            return scope.$watch('component.thumbnail', function(thumbnail) {
+              var view;
+              if (!thumbnail) {
+                return;
+              }
+              view = $compile(thumbnail)(scope);
+              return $(element).html(view);
+            });
           } else {
             return scope.$watch('component.template', function(template) {
               var view;
@@ -1055,7 +1062,7 @@
       "default": []
     };
     this.convertComponent = function(name, component) {
-      var result, _ref, _ref1, _ref10, _ref11, _ref12, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      var result, _ref, _ref1, _ref10, _ref11, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       result = {
         name: name,
         group: (_ref = component.group) != null ? _ref : 'Default',
@@ -1074,9 +1081,12 @@
         templateUrl: component.templateUrl,
         popoverTemplate: component.popoverTemplate,
         popoverTemplateUrl: component.popoverTemplateUrl,
-        thumbnail: (_ref12 = component.thumbnail) != null ? _ref12 : '',
+        thumbnail: component.thumbnail,
         thumbnailUrl: component.thumbnailUrl
       };
+      if (!result.thumbnail && !result.thumbnailUrl) {
+        console.error("The thumbnail is empty");
+      }
       if (!result.template && !result.templateUrl) {
         console.error("The template is empty.");
       }
